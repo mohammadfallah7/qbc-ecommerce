@@ -18,15 +18,11 @@ const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme)
-      document.querySelector("html")?.setAttribute("data-theme", savedTheme);
-  }, []);
+    document.querySelector("html")?.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const handleChangeTheme = () => {
     changeTheme(theme === "light" ? "dark" : "light");
-    document.querySelector("html")?.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
   };
 
   return (
