@@ -31,28 +31,28 @@ const NavBar = () => {
         <Link to="/home">
           <LuHome
             size={navIconSize}
-            className={`${navItem === "home" && "text-primary"}`}
+            className={`${navItem === "home" && "text-secondary"}`}
             onClick={() => changeNavItem("home")}
           />
         </Link>
         <Link to="/shop">
           <LuShoppingBag
             size={navIconSize}
-            className={`${navItem === "shop" && "text-primary"}`}
+            className={`${navItem === "shop" && "text-secondary"}`}
             onClick={() => changeNavItem("shop")}
           />
         </Link>
         <Link to="/cart">
           <LuShoppingCart
             size={navIconSize}
-            className={`${navItem === "cart" && "text-primary"}`}
+            className={`${navItem === "cart" && "text-secondary"}`}
             onClick={() => changeNavItem("cart")}
           />
         </Link>
         <Link to="/favorites">
           <LuHeart
             size={navIconSize}
-            className={`${navItem === "favorites" && "text-primary"}`}
+            className={`${navItem === "favorites" && "text-secondary"}`}
             onClick={() => changeNavItem("favorites")}
           />
         </Link>
