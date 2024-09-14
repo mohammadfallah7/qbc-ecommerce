@@ -8,7 +8,7 @@ interface ThemeStore {
 }
 
 const useTheme = create<ThemeStore>((set) => ({
-  theme: "light",
+  theme: localStorage.getItem("theme") as Theme,
   changeTheme: (newTheme) => set({ theme: newTheme }),
 }));
 

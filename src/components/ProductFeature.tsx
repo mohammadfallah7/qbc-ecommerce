@@ -1,7 +1,7 @@
 interface Props {
   icon: JSX.Element;
   name: string;
-  value: string | number;
+  value: string | number | undefined;
 }
 
 const ProductFeature = ({ name, value, icon }: Props) => {

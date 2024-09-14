@@ -5,6 +5,9 @@ import Cart from "../pages/Cart";
 import Shop from "../pages/Shop";
 import Favorites from "../pages/Favorites";
 import ProductPage from "../pages/ProductPage";
+import AddComment from "../pages/AddComment";
+import ProductComments from "../pages/ProductComments";
+import RelatedProducts from "../pages/RelatedProducts";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,11 @@ const router = createBrowserRouter([
       {
         path: ":section/products/:id",
         element: <ProductPage />,
+        children: [
+          { path: "add-comment", element: <AddComment /> },
+          { path: "comments", element: <ProductComments /> },
+          { path: "related-products", element: <RelatedProducts /> },
+        ],
       },
     ],
   },
