@@ -4,9 +4,7 @@ import SpecialProducts from "../components/SpecialProducts";
 import useProducts from "../stores/products-store";
 import useNavItem from "../stores/nav-item-store";
 import { useLocation } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
+import ProductSlider from "../components/ProductSlider";
 
 const Home = () => {
   const products = useProducts((state) => state.products);
@@ -25,13 +23,7 @@ const Home = () => {
         ))}
       </div>
       <div className="col-span-2 md:col-span-1">
-        <Swiper modules={[Autoplay]} spaceBetween={28} autoplay>
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
-              <ProductCard product={product} showInSlider={true} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <ProductSlider />
       </div>
       <div className="col-span-2">
         <SpecialProducts products={products} />

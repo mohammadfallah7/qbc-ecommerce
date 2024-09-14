@@ -13,12 +13,14 @@ import { Link } from "react-router-dom";
 import useNavItem from "../stores/nav-item-store";
 import useTheme from "../stores/theme-store";
 import { useEffect } from "react";
+import { themeChange } from "theme-change";
 
 const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   useEffect(() => {
-    document.querySelector("html")?.setAttribute("data-theme", theme);
+    themeChange(false);
+    document.querySelector("html")?.setAttribute("data-set-theme", theme);
   }, [theme]);
 
   const handleChangeTheme = () => {
