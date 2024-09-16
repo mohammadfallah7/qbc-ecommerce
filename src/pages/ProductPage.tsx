@@ -3,10 +3,12 @@ import useProducts from "../stores/products-store";
 import ProductFeatureList from "../components/ProductFeatureList";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import ProductStars from "../components/ProductStars";
+import useCart from "../stores/cart-store";
 
 const ProductPage = () => {
   const { id } = useParams();
   const { products, likeProduct } = useProducts();
+  const addProduct = useCart((state) => state.addProduct);
 
   const product = products.find(
     (product) => product.id === parseInt(id || "1")
@@ -41,7 +43,10 @@ const ProductPage = () => {
             ))}
           </select>
         </div>
-        <button className="btn btn-secondary text-xs btn-sm">
+        <button
+          className="btn btn-secondary text-xs btn-sm"
+          onClick={() => addProduct(product!)}
+        >
           افزودن به سبد خرید
         </button>
       </div>
