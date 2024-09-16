@@ -13,9 +13,9 @@ const ProductPage = () => {
   );
 
   return (
-    <div className="grid grid-cols-2 grid-rows-subgrid gap-14">
-      <div className="col-span-2 md:col-span-1 bg-base-300 rounded-lg h-96"></div>
-      <div className="col-span-2 md:col-span-1 flex flex-col justify-between items-start gap-7 relative">
+    <div className="grid grid-cols-4 grid-rows-subgrid gap-14">
+      <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg h-96"></div>
+      <div className="col-span-4 md:col-span-2 flex flex-col justify-between items-start gap-7 relative">
         {product?.isFavorite ? (
           <BsHeartFill
             className="absolute top-2 left-2 z-10 cursor-pointer text-secondary"
@@ -45,7 +45,7 @@ const ProductPage = () => {
           افزودن به سبد خرید
         </button>
       </div>
-      <div className="col-span-2 md:col-span-1 flex flex-col gap-7">
+      <div className="col-span-4 md:col-span-1 flex flex-col gap-7">
         <Link className="text-sm" to={"add-comment"}>
           ثبت نظر
         </Link>
@@ -56,7 +56,7 @@ const ProductPage = () => {
           محصولات مرتبط
         </Link>
       </div>
-      <div className="col-span-2 md:col-span-1">
+      <div className="col-span-4 md:col-span-3">
         <Outlet />
       </div>
     </div>

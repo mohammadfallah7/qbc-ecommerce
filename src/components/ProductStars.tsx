@@ -17,11 +17,11 @@ const ProductStars = ({ rate }: Props) => {
 
   return (
     <div className="flex gap-1">
-      {fillStar.map(() => (
-        <BsStarFill />
+      {fillStar.map((num) => (
+        <BsStarFill key={num} />
       ))}
-      {emptyStar.map(() => (
-        <BsStar />
+      {emptyStar.map((num) => (
+        <BsStar key={num} />
       ))}
     </div>
   );
