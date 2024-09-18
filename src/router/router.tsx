@@ -8,6 +8,9 @@ import ProductPage from "../pages/ProductPage";
 import AddComment from "../pages/AddComment";
 import ProductComments from "../pages/ProductComments";
 import RelatedProducts from "../pages/RelatedProducts";
+import Checkout from "../pages/Checkout";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,9 @@ const router = createBrowserRouter([
           { path: "related-products", element: <RelatedProducts /> },
         ],
       },
+      { path: ":section/checkout", element: <Checkout /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
     ],
   },
 ]);
