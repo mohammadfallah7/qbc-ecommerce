@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useNavItem from "../stores/nav-item-store";
 import useCart from "../stores/cart-store";
 import CartProduct from "../components/CartProduct";
@@ -32,9 +32,12 @@ const Cart = () => {
               .toLocaleString()}{" "}
             تومان
           </span>
-          <button className="btn btn-secondary text-sm rounded-full">
+          <Link
+            to={"checkout"}
+            className="btn btn-secondary text-sm rounded-full"
+          >
             تکمیل خرید
-          </button>
+          </Link>
         </div>
       </div>
     )

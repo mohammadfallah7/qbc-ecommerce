@@ -79,8 +79,12 @@ const NavBar = () => {
           />
         )}
 
-        <LuLogIn size={navIconSize} />
-        <LuUserPlus size={navIconSize} />
+        <Link to={"/login"}>
+          <LuLogIn size={navIconSize} />
+        </Link>
+        <Link to={"/register"}>
+          <LuUserPlus size={navIconSize} />
+        </Link>
       </div>
     </aside>
   );

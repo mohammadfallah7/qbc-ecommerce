@@ -45,6 +45,7 @@ const ShopFilter = () => {
       <input
         {...register("price", { valueAsNumber: true })}
         type="number"
+        placeholder="قیمت را وارد کنید"
         className="input input-bordered input-sm w-full"
       />
 
