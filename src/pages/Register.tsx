@@ -4,6 +4,9 @@ import authDark from "../assets/images/auth-dark.png";
 import useTheme from "../stores/theme-store";
 import { Link, useNavigate } from "react-router-dom";
 import useUser from "../stores/user-store";
+import useNavItem from "../stores/nav-item-store";
+import { useEffect } from "react";
+import Input from "../components/Input";
 
 type RegisterFormData = {
   name: string;
@@ -13,73 +16,61 @@ type RegisterFormData = {
 };
 
 const Register = () => {
+  const changeNavItem = useNavItem((state) => state.changeNavItem);
   const theme = useTheme((state) => state.theme);
   const { register, handleSubmit, reset } = useForm<RegisterFormData>();
   const registerUser = useUser((state) => state.register);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    changeNavItem("register");
+  });
+
+  const onSubmit = (data: RegisterFormData) => {
+    if (data.password === data.repeatPassword) {
+      registerUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        isAdmin: false,
+      });
+      navigate("/");
+      reset();
+    }
+  };
+
   return (
-    <div className="grid grid-cols-2 gap-14">
-      <div className="col-span-2 md:col-span-1">
+    <div className="grid grid-cols-2 gap-14 items-center">
+      <div className="col-span-2 order-2 sm:order-1 md:col-span-1">
         <h2 className="text-xl mb-5">ثبت نام</h2>
-        <form
-          onSubmit={handleSubmit((data) => {
-            if (data.password === data.repeatPassword) {
-              registerUser({
-                name: data.name,
-                email: data.email,
-                password: data.password,
-                isAdmin: false,
-              });
-              navigate("/login");
-              reset();
-            }
-          })}
-        >
-          <label className="form-control w-full mb-3">
-            <div className="label">
-              <span className="label-text">نام</span>
-            </div>
-            <input
-              {...register("name", { required: true })}
-              type="text"
-              placeholder="نام خود را وارد نمایید"
-              className="input input-bordered text-sm"
-            />
-          </label>
-          <label className="form-control w-full mb-3">
-            <div className="label">
-              <span className="label-text">ایمیل</span>
-            </div>
-            <input
-              {...register("email", { required: true })}
-              type="email"
-              placeholder="ایمیل خود را وارد نمایید"
-              className="input input-bordered text-sm"
-            />
-          </label>
-          <label className="form-control w-full mb-3">
-            <div className="label">
-              <span className="label-text">رمز عبور</span>
-            </div>
-            <input
-              {...register("password", { required: true })}
-              type="password"
-              placeholder="رمز عبور خود را وارد نمایید"
-              className="input input-bordered text-sm"
-            />
-          </label>
-          <label className="form-control w-full mb-3">
-            <div className="label">
-              <span className="label-text">تکرار رمز عبور</span>
-            </div>
-            <input
-              {...register("repeatPassword", { required: true })}
-              type="password"
-              placeholder="رمز عبور خود را مجدد وارد نمایید"
-              className="input input-bordered text-sm"
-            />
-          </label>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            label="نام"
+            placeholder="محمد فلاح"
+            value="محمد فلاح"
+            useFormRegister={register("name")}
+          />
+          <Input
+            label="ایمیل"
+            placeholder="test@gmail.com"
+            type="email"
+            value="mohammad@gmail.com"
+            useFormRegister={register("email")}
+          />
+          <Input
+            label="رمز عبور"
+            placeholder="12345678"
+            type="password"
+            value="12345678"
+            useFormRegister={register("password")}
+          />
+          <Input
+            label="تکرار رمز عبور"
+            placeholder="12345678"
+            type="password"
+            value="12345678"
+            useFormRegister={register("repeatPassword")}
+          />
 
           <button className="btn btn-secondary">ثبت نام</button>
         </form>
@@ -90,7 +81,7 @@ const Register = () => {
           </Link>
         </div>
       </div>
-      <figure className="col-span-2 md:col-span-1">
+      <figure className="col-span-2 order-1 sm:order-2 md:col-span-1">
         <img src={theme === "light" ? authLight : authDark} alt="Auth" />
       </figure>
     </div>

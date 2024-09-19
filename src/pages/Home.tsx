@@ -3,16 +3,14 @@ import ProductCard from "../components/ProductCard";
 import SpecialProducts from "../components/SpecialProducts";
 import useProducts from "../stores/products-store";
 import useNavItem from "../stores/nav-item-store";
-import { useLocation } from "react-router-dom";
 import ProductSlider from "../components/ProductSlider";
 
 const Home = () => {
   const products = useProducts((state) => state.products);
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const { pathname } = useLocation();
 
   useEffect(() => {
-    changeNavItem(pathname.substring(1));
+    changeNavItem("home");
   });
 
   return (

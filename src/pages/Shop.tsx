@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import useNavItem from "../stores/nav-item-store";
 import { useEffect } from "react";
 import useProducts from "../stores/products-store";
@@ -7,11 +6,10 @@ import ShopFilter from "../components/ShopFilter";
 
 const Shop = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const { pathname } = useLocation();
   const products = useProducts((state) => state.products);
 
   useEffect(() => {
-    changeNavItem(pathname.substring(1));
+    changeNavItem("shop");
   });
 
   return (

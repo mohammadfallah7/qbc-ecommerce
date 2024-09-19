@@ -26,7 +26,7 @@ const ProductCard = ({ product }: Props) => {
           />
         )}
       </div>
-      <Link to={`products/${product.id}`}>
+      <Link to={`/products/${product.id}`}>
         <div className="flex justify-between items-center">
           <p className="text-sm ">{product.title}</p>
           <PriceBadge price={product.price} />

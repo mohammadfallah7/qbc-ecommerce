@@ -36,7 +36,7 @@ const NavBar = () => {
   return (
     <aside className="w-14 py-3 fixed top-0 bottom-0 right-0 text-center flex flex-col justify-between items-center z-20">
       <div className="flex flex-col gap-10">
-        <Link to="/home">
+        <Link to="/">
           <LuHome
             size={navIconSize}
             className={`${navItem === "home" && "text-secondary"}`}
@@ -113,12 +113,20 @@ const NavBar = () => {
 
         {!user && (
           <Link to={"/login"}>
-            <LuLogIn size={navIconSize} />
+            <LuLogIn
+              size={navIconSize}
+              className={`${navItem === "login" && "text-secondary"}`}
+              onClick={() => changeNavItem("login")}
+            />
           </Link>
         )}
         {!user && (
           <Link to={"/register"}>
-            <LuUserPlus size={navIconSize} />
+            <LuUserPlus
+              size={navIconSize}
+              className={`${navItem === "register" && "text-secondary"}`}
+              onClick={() => changeNavItem("register")}
+            />
           </Link>
         )}
       </div>

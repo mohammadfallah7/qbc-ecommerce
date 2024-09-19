@@ -8,12 +8,7 @@ interface UserStore {
 }
 
 const useUser = create<UserStore>((set) => ({
-  user: {
-    name: "محمد فلاح",
-    email: "mohammad@gmail.com",
-    password: "15853516",
-    isAdmin: false,
-  },
+  user: undefined,
   users: [],
   register: (newUser) => set(() => ({ user: newUser })),
   logout: () => set(() => ({ user: undefined })),

@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useNavItem from "../stores/nav-item-store";
 import useCart from "../stores/cart-store";
 import CartProduct from "../components/CartProduct";
 
 const Cart = () => {
-  const { pathname } = useLocation();
   const changeNavItem = useNavItem((state) => state.changeNavItem);
   const cartProducts = useCart((state) => state.cartProducts);
 
   useEffect(() => {
-    changeNavItem(pathname.substring(1));
+    changeNavItem("cart");
   });
 
   return (
