@@ -12,14 +12,18 @@ import { navIconSize } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useNavItem from "../stores/nav-item-store";
 import useTheme from "../stores/theme-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { themeChange } from "theme-change";
 import useCart from "../stores/cart-store";
+import useUser from "../stores/user-store";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 
 const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   const cartProductsLength = useCart((state) => state.cartProducts.length);
+  const { user, logout } = useUser();
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   useEffect(() => {
     themeChange(false);
     document.querySelector("html")?.setAttribute("data-set-theme", theme);
@@ -30,7 +34,7 @@ const NavBar = () => {
   };
 
   return (
-    <aside className="w-14 py-3 fixed top-0 bottom-0 right-0 text-center flex flex-col justify-between items-center">
+    <aside className="w-14 py-3 fixed top-0 bottom-0 right-0 text-center flex flex-col justify-between items-center z-20">
       <div className="flex flex-col gap-10">
         <Link to="/home">
           <LuHome
@@ -79,12 +83,44 @@ const NavBar = () => {
           />
         )}
 
-        <Link to={"/login"}>
-          <LuLogIn size={navIconSize} />
-        </Link>
-        <Link to={"/register"}>
-          <LuUserPlus size={navIconSize} />
-        </Link>
+        {user && (
+          <>
+            <ul
+              className={`absolute right-0 bottom-10 menu w-36 bg-base-200 rounded-box ${
+                showMenu ? "block" : "hidden"
+              }`}
+            >
+              <li className="mb-3">
+                <Link to={"/profile"}>پروفایل</Link>
+              </li>
+              <li onClick={() => logout()}>
+                <a>خروج</a>
+              </li>
+            </ul>
+            <span
+              className="text-sm flex items-center gap-1 cursor-pointer"
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              {user.isAdmin ? "ادمین" : "کاربر"}{" "}
+              {showMenu ? (
+                <FaChevronUp size={10} />
+              ) : (
+                <FaChevronDown size={10} />
+              )}
+            </span>
+          </>
+        )}
+
+        {!user && (
+          <Link to={"/login"}>
+            <LuLogIn size={navIconSize} />
+          </Link>
+        )}
+        {!user && (
+          <Link to={"/register"}>
+            <LuUserPlus size={navIconSize} />
+          </Link>
+        )}
       </div>
     </aside>
   );

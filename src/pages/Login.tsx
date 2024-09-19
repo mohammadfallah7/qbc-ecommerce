@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import authLight from "../assets/images/auth-light.png";
 import authDark from "../assets/images/auth-dark.png";
 import useTheme from "../stores/theme-store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useUser from "../stores/user-store";
 
 type LoginFormData = {
   email: string;
@@ -12,6 +13,8 @@ type LoginFormData = {
 const Login = () => {
   const theme = useTheme((state) => state.theme);
   const { register, handleSubmit, reset } = useForm<LoginFormData>();
+  const user = useUser((state) => state.user);
+  const navigate = useNavigate();
 
   return (
     <div className="grid grid-cols-2 gap-14">
@@ -19,8 +22,10 @@ const Login = () => {
         <h2 className="text-xl mb-5">ورود</h2>
         <form
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            reset();
+            if (user?.password === data.password && user.email === data.email) {
+              navigate("/home");
+              reset();
+            }
           })}
         >
           <label className="form-control w-full mb-3">

@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import authLight from "../assets/images/auth-light.png";
 import authDark from "../assets/images/auth-dark.png";
 import useTheme from "../stores/theme-store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useUser from "../stores/user-store";
 
 type RegisterFormData = {
   name: string;
@@ -14,6 +15,8 @@ type RegisterFormData = {
 const Register = () => {
   const theme = useTheme((state) => state.theme);
   const { register, handleSubmit, reset } = useForm<RegisterFormData>();
+  const registerUser = useUser((state) => state.register);
+  const navigate = useNavigate();
 
   return (
     <div className="grid grid-cols-2 gap-14">
@@ -21,8 +24,16 @@ const Register = () => {
         <h2 className="text-xl mb-5">ثبت نام</h2>
         <form
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            reset();
+            if (data.password === data.repeatPassword) {
+              registerUser({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                isAdmin: false,
+              });
+              navigate("/login");
+              reset();
+            }
           })}
         >
           <label className="form-control w-full mb-3">
@@ -30,7 +41,7 @@ const Register = () => {
               <span className="label-text">نام</span>
             </div>
             <input
-              {...register("name")}
+              {...register("name", { required: true })}
               type="text"
               placeholder="نام خود را وارد نمایید"
               className="input input-bordered text-sm"
@@ -41,7 +52,7 @@ const Register = () => {
               <span className="label-text">ایمیل</span>
             </div>
             <input
-              {...register("email")}
+              {...register("email", { required: true })}
               type="email"
               placeholder="ایمیل خود را وارد نمایید"
               className="input input-bordered text-sm"
@@ -52,7 +63,7 @@ const Register = () => {
               <span className="label-text">رمز عبور</span>
             </div>
             <input
-              {...register("password")}
+              {...register("password", { required: true })}
               type="password"
               placeholder="رمز عبور خود را وارد نمایید"
               className="input input-bordered text-sm"
@@ -63,7 +74,7 @@ const Register = () => {
               <span className="label-text">تکرار رمز عبور</span>
             </div>
             <input
-              {...register("repeatPassword")}
+              {...register("repeatPassword", { required: true })}
               type="password"
               placeholder="رمز عبور خود را مجدد وارد نمایید"
               className="input input-bordered text-sm"
