@@ -3,6 +3,7 @@ import PageLayout from "../layout/PageLayout";
 import Favorites from "../pages/Favorites";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
+import ShoppingProgress from "../pages/ShoppingProgress";
 
 const router: RouteObject[] = [
   {
@@ -14,7 +15,15 @@ const router: RouteObject[] = [
     ),
   },
   {
-    path: ":section/checkout",
+    path: ":section/shopping-progress",
+    element: (
+      <PageLayout>
+        <ShoppingProgress />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/checkout",
     element: (
       <PageLayout>
         <Checkout />

@@ -32,7 +32,7 @@ const Cart = () => {
             تومان
           </span>
           <Link
-            to={"checkout"}
+            to={"shopping-progress"}
             className="btn btn-secondary text-sm rounded-full"
           >
             تکمیل خرید
