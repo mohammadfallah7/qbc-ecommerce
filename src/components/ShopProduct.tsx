@@ -26,7 +26,7 @@ const ShopProduct = ({ product }: Props) => {
         </div>
         <p>{product.description}</p>
         <div className="card-actions items-center justify-between mt-2">
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product.id}?content=add-comment`}>
             <button className="btn btn-secondary btn-sm text-xs">
               مشاهده بیشتر
             </button>

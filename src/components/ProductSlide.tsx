@@ -8,7 +8,7 @@ interface Props {
 
 const ProductSlide = ({ product }: Props) => {
   return (
-    <Link to={`products/${product.id}`}>
+    <Link to={`products/${product.id}?content=add-comment`}>
       <div className="flex flex-col gap-3">
         <div className="bg-base-300 w-full rounded-lg overflow-hidden h-56 relative"></div>
         <div className="grid grid-cols-2 gap-7">

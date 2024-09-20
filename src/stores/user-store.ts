@@ -9,7 +9,6 @@ interface UserStore {
 
 const useUser = create<UserStore>((set) => ({
   user: undefined,
-  users: [],
   register: (newUser) => set(() => ({ user: newUser })),
   logout: () => set(() => ({ user: undefined })),
 }));

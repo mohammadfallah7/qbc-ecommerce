@@ -12,7 +12,7 @@ const CartProduct = ({ cartProduct }: Props) => {
 
   return (
     <div className="flex items-center justify-between p-5">
-      <Link to={`/products/${cartProduct.id}`}>
+      <Link to={`/products/${cartProduct.id}?content=add-comment`}>
         <div className="flex items-center justify-stretch gap-5">
           <div className="bg-base-300 w-24 h-24 rounded"></div>
           <div className="flex flex-col gap-3 text-sm">

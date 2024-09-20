@@ -1,5 +1,5 @@
 import { RouteObject, useRoutes } from "react-router-dom";
-import PageLayout from "../pages/PageLayout";
+import PageLayout from "../layout/PageLayout";
 import Favorites from "../pages/Favorites";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";

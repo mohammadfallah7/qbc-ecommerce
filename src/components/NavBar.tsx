@@ -24,6 +24,11 @@ const NavBar = () => {
   const cartProductsLength = useCart((state) => state.cartProducts.length);
   const { user, logout } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
+
+  useEffect(() => {
+    return () => setShowMenu(false);
+  }, [user]);
+
   useEffect(() => {
     themeChange(false);
     document.querySelector("html")?.setAttribute("data-set-theme", theme);
