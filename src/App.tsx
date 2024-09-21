@@ -3,19 +3,21 @@ import publicRouter from "./router/PublicRouter";
 import PrivateRouter from "./components/PrivateRouter";
 import AppRouter from "./router/AppRouter";
 import useUser from "./stores/user-store";
+import { useEffect } from "react";
 
 const App = () => {
-  const user = useUser((state) => state.user);
+  const { initializeAuth, token } = useUser();
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
 
   const router = createBrowserRouter([
     ...publicRouter.routes,
     {
       path: "/*",
       element: (
-        <PrivateRouter
-          element={<AppRouter />}
-          isAuthenticated={user ? true : false}
-        />
+        <PrivateRouter element={<AppRouter />} isAuthenticated={!!token} />
       ),
     },
   ]);

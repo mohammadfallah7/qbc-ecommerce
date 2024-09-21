@@ -22,7 +22,7 @@ const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   const cartProductsLength = useCart((state) => state.cartProducts.length);
-  const { user, logout } = useUser();
+  const { user, token, logout } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const NavBar = () => {
           />
         )}
 
-        {user && (
+        {token && (
           <>
             <ul
               className={`absolute right-0 bottom-10 menu w-36 bg-base-200 rounded-box ${
@@ -106,7 +106,7 @@ const NavBar = () => {
               className="text-sm flex items-center gap-1 cursor-pointer"
               onClick={() => setShowMenu(!showMenu)}
             >
-              {user.isAdmin ? "ادمین" : "کاربر"}{" "}
+              کاربر
               {showMenu ? (
                 <FaChevronUp size={10} />
               ) : (
@@ -116,7 +116,7 @@ const NavBar = () => {
           </>
         )}
 
-        {!user && (
+        {!token && (
           <Link to={"/login"}>
             <LuLogIn
               size={navIconSize}
@@ -125,7 +125,7 @@ const NavBar = () => {
             />
           </Link>
         )}
-        {!user && (
+        {!token && (
           <Link to={"/register"}>
             <LuUserPlus
               size={navIconSize}
