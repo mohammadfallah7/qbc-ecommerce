@@ -70,7 +70,7 @@ const ProductPage = () => {
           ثبت نظر
         </Link>
         <Link
-          className="text-sm"
+          className="text-sm active:font-bold"
           to={`/products/${product?.id}?content=comments`}
         >
           مشاهده نظرات

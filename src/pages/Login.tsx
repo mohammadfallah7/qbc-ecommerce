@@ -16,7 +16,12 @@ type LoginFormData = {
 const Login = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
   const theme = useTheme((state) => state.theme);
-  const { register, handleSubmit, reset } = useForm<LoginFormData>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginFormData>();
   const user = useUser((state) => state.user);
   const navigate = useNavigate();
 
@@ -37,19 +42,43 @@ const Login = () => {
         <h2 className="text-xl mb-5">ورود</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
+            error={errors.email}
             label="ایمیل"
             placeholder="test@gmail.com"
             type="email"
-            useFormRegister={register("email")}
+            useFormRegister={register("email", {
+              required: true,
+              minLength: 3,
+            })}
           />
+          {errors.email?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است</p>
+          )}
+          {errors.email?.type === "minlength" && (
+            <p className="text-error text-sm">حداقل باید 3 کاراکتر باشد.</p>
+          )}
           <Input
+            error={errors.password}
             label="رمز عبور"
             placeholder="12345678"
             type="password"
-            useFormRegister={register("password")}
+            useFormRegister={register("password", {
+              required: true,
+              minLength: 8,
+              maxLength: 12,
+            })}
           />
+          {errors.password?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.password?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+          )}
+          {errors.password?.type === "maxLength" && (
+            <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
+          )}
 
-          <button className="btn btn-secondary">ورود</button>
+          <button className="btn btn-secondary mt-5">ورود</button>
         </form>
         <div className="flex items-center gap-2 mt-5 text-sm">
           <span>عضو نیستید؟</span>
