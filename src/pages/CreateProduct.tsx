@@ -3,33 +3,39 @@ import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 
 type CreateProductFormData = {
-  productTitle: string;
+  name: string;
   price: number;
-  brand: string;
+  category: string;
   description: string;
-  image: string;
+  quantity: number;
+  image: FileList;
 };
 
 const CreateProduct = () => {
-  const { register } = useForm<CreateProductFormData>();
+  const { register, handleSubmit } = useForm<CreateProductFormData>();
+
+  const onSubmit = (data: CreateProductFormData) => {
+    console.log(data);
+  };
+
   return (
-    <div className="w-2/3">
-      <h1>محصول جدید</h1>
-      <div className="grid grid-cols-2 ">
-        <div className="col-span-2 flex items-center justify-center border-dotted ">
-          <label
-            htmlFor="imageUpload"
-            className="border-dashed border border-zinc-700 rounded-lg w-full h-24 flex items-center justify-center"
-          >
-            آپلود عکس
-          </label>
-          <input type="file" id="imageUpload" className="" hidden />
+    <div className="w-2/3 flex flex-col gap-4">
+      <h1 className="text-lg">محصول جدید</h1>
+      <form className="grid grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
+        <div className="col-span-2">
+          <Input
+            label="آپلود عکس"
+            type="file"
+            useFormRegister={register("image")}
+            isHidden={true}
+            className="border border-dashed rounded-lg h-20 cursor-pointer input-bordered justify-center items-center"
+          />
         </div>
         <div className="col-span-2 ">
           <Input
             label="نام"
             placeholder="نام محصول را وارد نمایید"
-            useFormRegister={register("productTitle")}
+            useFormRegister={register("name")}
           />
         </div>
         <div className="col-span-2 flex gap-3">
@@ -42,7 +48,7 @@ const CreateProduct = () => {
           <Input
             label="برند"
             placeholder="برند محصول را وارد نمایید"
-            useFormRegister={register("brand")}
+            useFormRegister={register("category")}
           />
         </div>
         <div className="col-span-2">
@@ -52,17 +58,22 @@ const CreateProduct = () => {
           <Input
             label="تعداد قابل خرید"
             placeholder="تعداد قابل خرید را وارد نمایید"
-            useFormRegister={register("price")}
+            useFormRegister={register("quantity")}
           />
 
           <Input
             label="موجودی"
             placeholder="موجودی"
-            useFormRegister={register("brand")}
+            useFormRegister={register("quantity")}
           />
         </div>
-      </div>
-      <button className="btn btn-sm btn-secondary mt-5">ساخت محصول جدید</button>
+        <button
+          type="submit"
+          className="btn btn-sm text-xs btn-secondary self-start w-36"
+        >
+          ساخت محصول جدید
+        </button>
+      </form>
     </div>
   );
 };
