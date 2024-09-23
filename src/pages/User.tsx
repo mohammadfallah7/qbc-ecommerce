@@ -2,6 +2,7 @@ import { FaTrash } from "react-icons/fa6";
 import useUser from "../stores/user-store";
 import { PiCheckFatFill } from "react-icons/pi";
 import { CgClose } from "react-icons/cg";
+import { BiEditAlt } from "react-icons/bi";
 
 const User = () => {
   const { users, deleteUser } = useUser();
@@ -22,8 +23,18 @@ const User = () => {
           {users.map((user) => (
             <tr>
               <th>{user.id}</th>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
+              <td>
+                <div className="flex items-center gap-1">
+                  <BiEditAlt className="cursor-pointer" />
+                  {user.name}
+                </div>
+              </td>
+              <td>
+                <div className="flex items-center gap-1">
+                  <BiEditAlt className="cursor-pointer" />
+                  {user.email}
+                </div>
+              </td>
               <td>
                 {user.isAdmin ? (
                   <PiCheckFatFill className="text-success" />

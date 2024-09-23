@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import useComments from "../stores/comment-store";
+import TextArea from "./TextArea";
 
 type FormData = {
   rate: 1 | 2 | 3 | 4 | 5;
@@ -39,16 +40,12 @@ const AddComment = () => {
           <option value={5}>5</option>
         </select>
       </label>
-      <label className="form-control w-full max-w-xl my-5">
-        <div className="label">
-          <span className="label-text">نظر</span>
-        </div>
-        <textarea
-          {...register("comment", { required: true })}
-          className="textarea textarea-bordered h-24 resize-none"
-          placeholder="نظر خود را وارد نمایید"
-        ></textarea>
-      </label>
+      <TextArea
+        isFullWidth={false}
+        label="نظر"
+        placeholder="نظر خود را وارد نمایید"
+        useFormRegister={register("comment", { required: true })}
+      />
       <button type="submit" className="btn btn-secondary btn-sm text-xs">
         ثبت نظر
       </button>

@@ -5,6 +5,7 @@ import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
 import ShoppingProgress from "../pages/ShoppingProgress";
 import User from "../pages/User";
+import CreateProduct from "../pages/CreateProduct";
 
 const router: RouteObject[] = [
   {
@@ -44,6 +45,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout>
         <User />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/create-product",
+    element: (
+      <PageLayout isCenter={true}>
+        <CreateProduct />
       </PageLayout>
     ),
   },
