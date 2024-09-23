@@ -4,7 +4,7 @@ import useComments from "../stores/comment-store";
 const ProductComments = () => {
   const comments = useComments((state) => state.comments);
 
-  return (
+  return comments.length > 0 ? (
     <div>
       {comments.map((comment) => (
         <div
@@ -22,6 +22,8 @@ const ProductComments = () => {
         </div>
       ))}
     </div>
+  ) : (
+    <p>نظری برای این محصول وجود ندارد.</p>
   );
 };
 

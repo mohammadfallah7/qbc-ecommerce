@@ -18,7 +18,12 @@ type RegisterFormData = {
 const Register = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
   const theme = useTheme((state) => state.theme);
-  const { register, handleSubmit, reset } = useForm<RegisterFormData>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
   const registerUser = useUser((state) => state.register);
   const navigate = useNavigate();
 
@@ -45,32 +50,77 @@ const Register = () => {
         <h2 className="text-xl mb-5">ثبت نام</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
+            error={errors.name}
             label="نام"
             placeholder="محمد فلاح"
             value="محمد فلاح"
-            useFormRegister={register("name")}
+            useFormRegister={register("name", { required: true, minLength: 3 })}
           />
+          {errors.name?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.name?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
+          )}
           <Input
+            error={errors.email}
             label="ایمیل"
             placeholder="test@gmail.com"
             type="email"
             value="mohammad@gmail.com"
-            useFormRegister={register("email")}
+            useFormRegister={register("email", {
+              required: true,
+              minLength: 3,
+            })}
           />
+          {errors.email?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.email?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
+          )}
           <Input
+            error={errors.password}
             label="رمز عبور"
             placeholder="12345678"
             type="password"
             value="12345678"
-            useFormRegister={register("password")}
+            useFormRegister={register("password", {
+              required: true,
+              minLength: 8,
+              maxLength: 12,
+            })}
           />
+          {errors.password?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.password?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+          )}
+          {errors.password?.type === "maxLength " && (
+            <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
+          )}
           <Input
+            error={errors.repeatPassword}
             label="تکرار رمز عبور"
             placeholder="12345678"
             type="password"
             value="12345678"
-            useFormRegister={register("repeatPassword")}
+            useFormRegister={register("repeatPassword", {
+              required: true,
+              minLength: 8,
+              maxLength: 12,
+            })}
           />
+          {errors.repeatPassword?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.repeatPassword?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+          )}
+          {errors.repeatPassword?.type === "maxLength " && (
+            <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
+          )}
 
           <button className="btn btn-secondary">ثبت نام</button>
         </form>
