@@ -37,7 +37,7 @@ const Cart = () => {
       </div>
     </div>
   ) : (
-    <div className="m-14">
+    <div className="mt-5">
       <Warning title="سبد خرید خالی است." />
     </div>
   );

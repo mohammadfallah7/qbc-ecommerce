@@ -12,7 +12,7 @@ const Favorites = () => {
     changeNavItem("favorites");
   });
 
-  return products.length > 0 ? (
+  return products.filter((product) => product.isFavorite).length > 0 ? (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
       {products
         .filter((product) => product.isFavorite)
@@ -21,7 +21,7 @@ const Favorites = () => {
         ))}
     </div>
   ) : (
-    <div>
+    <div className="mt-5">
       <Warning title="محصول مورد علاقه ای وجود ندارد." />
     </div>
   );
