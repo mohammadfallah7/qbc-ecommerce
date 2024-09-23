@@ -25,7 +25,7 @@ const Cart = () => {
         <span className="font-bold">
           {cartProducts
             .reduce((accumulator, current) => (accumulator += current.price), 0)
-            .toLocaleString()}{" "}
+            .toLocaleString()}
           تومان
         </span>
         <Link

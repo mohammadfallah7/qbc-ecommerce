@@ -14,9 +14,9 @@ const CreateProduct = () => {
   const { register } = useForm<CreateProductFormData>();
   return (
     <div className="w-2/3">
-      <h1>محصول جدید</h1>
+      <h1 className="mb-5">محصول جدید</h1>
       <div className="grid grid-cols-2 ">
-        <div className="col-span-2 flex items-center justify-center border-dotted ">
+        <div className="col-span-2 flex items-center justify-center border-dashed ">
           <label
             htmlFor="imageUpload"
             className="border-dashed border border-zinc-700 rounded-lg w-full h-24 flex items-center justify-center"

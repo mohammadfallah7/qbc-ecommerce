@@ -7,6 +7,7 @@ import CartProductsTable from "../components/CartProductsTable";
 import { Link } from "react-router-dom";
 import { shippingPrice } from "../utils/constants";
 import { finalPrice, taxPrice } from "../utils/calculate-price";
+import { useNavigate } from "react-router-dom";
 
 type ShoppingProgressFormData = {
   address: string;
@@ -24,7 +25,8 @@ const ShoppingProgress = () => {
     reset,
     formState: { errors },
   } = useForm<ShoppingProgressFormData>();
-  const { shippingInfo, addShippingInfo, cartProducts } = useCart();
+  const { shippingInfo, addShippingInfo, cartProducts, addToOrdered } =
+    useCart();
 
   useEffect(() => {
     if (shippingInfo) setStep((state) => (state < 3 ? state + 1 : state));
@@ -39,6 +41,11 @@ const ShoppingProgress = () => {
     (acc, current) => (acc += current.price),
     0
   );
+  const navigate = useNavigate();
+  const handlePlaceOrder = () => {
+    addToOrdered();
+    navigate("/order");
+  };
 
   return (
     <div>
@@ -127,7 +134,11 @@ const ShoppingProgress = () => {
               </div>
             </div>
           </div>
-          <Link to={"/checkout"} className="btn btn-secondary rounded-full">
+          <Link
+            to={"/checkout"}
+            onClick={handlePlaceOrder}
+            className="btn btn-secondary rounded-full"
+          >
             ثبت سفارش
           </Link>
         </div>

@@ -9,4 +9,6 @@ export type ProductEntity = {
   isFavorite: boolean;
   update: Date;
   comments: number;
+  ispaid?: boolean;
+  shippingStatus?: "sent" | "in_progress" | "not_sent";
 };
