@@ -8,6 +8,8 @@ interface Props {
   useFormRegister: UseFormRegisterReturn;
   value?: string | number;
   error?: FieldError;
+  showLabel?: boolean;
+  className?: string;
 }
 
 const Input = ({
@@ -17,18 +19,25 @@ const Input = ({
   useFormRegister,
   value,
   error,
+  showLabel = true,
+  className = "",
 }: Props) => {
   return (
     <label className="form-control w-full mb-3">
-      <div className="label">
-        <span className="label-text">{label}</span>
-      </div>
+      {showLabel && (
+        <div className="label">
+          <span className="label-text">{label}</span>
+        </div>
+      )}
+
       <input
         {...useFormRegister}
         type={type}
         value={value}
         placeholder={placeholder}
-        className={`input input-bordered text-sm ${error && "input-error"}`}
+        className={`input input-bordered text-sm ${
+          error && "input-error"
+        } ${className}`}
       />
     </label>
   );
