@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
+import { useState } from "react";
 
 type CreateProductFormData = {
   productTitle: string;
@@ -12,10 +13,15 @@ type CreateProductFormData = {
 
 const CreateProduct = () => {
   const { register } = useForm<CreateProductFormData>();
+  const [fileState, setFileState] = useState<string>("");
+  const handleUpload = (e) => {
+    setFileState(URL.createObjectURL(e.target.files[0]));
+  };
   return (
     <div className="w-2/3">
       <h1 className="mb-5">محصول جدید</h1>
       <div className="grid grid-cols-2 ">
+        <img className="hidden" />
         <div className="col-span-2 flex items-center justify-center border-dashed ">
           <label
             htmlFor="imageUpload"
@@ -23,7 +29,21 @@ const CreateProduct = () => {
           >
             آپلود عکس
           </label>
-          <input type="file" id="imageUpload" className="" hidden />
+          <input
+            type="file"
+            id="imageUpload"
+            className=""
+            onChange={handleUpload}
+            accept="image/jpg image/png"
+            hidden
+          />
+          {fileState ? (
+            <div>
+              <img src={fileState} />
+            </div>
+          ) : (
+            <p>no image is uploaded</p>
+          )}
         </div>
         <div className="col-span-2 ">
           <Input

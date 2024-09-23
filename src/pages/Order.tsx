@@ -1,5 +1,6 @@
 import useCart from "../stores/cart-store";
 import useUser from "../stores/user-store";
+import { showStatus } from "../utils/status";
 
 const Order = () => {
   const { OrderedProduct } = useCart();
@@ -9,26 +10,6 @@ const Order = () => {
     return ispaid
       ? { text: "پرداخت شده", className: "badge badge-success text-white" }
       : { text: "پرداخت نشده", className: "badge badge-error text-white" };
-  };
-
-  const getShippingStatus = (shippingStatus: string) => {
-    switch (shippingStatus) {
-      case "sent":
-        return {
-          text: "ارسال شده",
-          className: "badge badge-success text-white",
-        };
-      case "in_progress":
-        return {
-          text: "در حال ارسال",
-          className: "badge badge-info text-white",
-        };
-      default:
-        return {
-          text: "ارسال نشده",
-          className: "badge badge-error text-white",
-        };
-    }
   };
 
   return (
@@ -51,7 +32,7 @@ const Order = () => {
           {OrderedProduct.length > 0 ? (
             OrderedProduct.map((product) => {
               const paymentStatus = getPaymentStatus(product.ispaid!);
-              const shippingStatus = getShippingStatus(product.shippingStatus!);
+              const shippingStatus = showStatus(product.shippingStatus!);
 
               return (
                 <tr key={product.id}>
