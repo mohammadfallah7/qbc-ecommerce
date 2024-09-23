@@ -37,7 +37,7 @@ const Register = () => {
         name: data.name,
         email: data.email,
         password: data.password,
-        isAdmin: false,
+        isAdmin: true,
       });
       navigate("/");
       reset();

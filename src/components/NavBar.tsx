@@ -95,18 +95,38 @@ const NavBar = () => {
                 showMenu ? "block" : "hidden"
               }`}
             >
+              {user?.isAdmin && (
+                <li className="mb-3">
+                  <Link to={"/"}>داشبورد</Link>
+                </li>
+              )}
+              {user?.isAdmin && (
+                <li className="mb-3">
+                  <Link to={"/"}>محصول جدید</Link>
+                </li>
+              )}
+              {user?.isAdmin && (
+                <li className="mb-3">
+                  <Link to={"/"}>مدیریت کاربران</Link>
+                </li>
+              )}
+              {user?.isAdmin && (
+                <li className="mb-3">
+                  <Link to={"/"}>سفارشات</Link>
+                </li>
+              )}
               <li className="mb-3">
                 <Link to={"/profile"}>پروفایل</Link>
               </li>
               <li onClick={() => logout()}>
-                <a>خروج</a>
+                <a>خروج از حساب</a>
               </li>
             </ul>
             <span
               className="text-sm flex items-center gap-1 cursor-pointer"
               onClick={() => setShowMenu(!showMenu)}
             >
-              کاربر
+              {user?.isAdmin ? "ادمین" : "کاربر"}
               {showMenu ? (
                 <FaChevronUp size={10} />
               ) : (
