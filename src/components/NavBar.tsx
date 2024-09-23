@@ -107,7 +107,7 @@ const NavBar = () => {
               )}
               {user?.isAdmin && (
                 <li className="mb-3">
-                  <Link to={"/"}>مدیریت کاربران</Link>
+                  <Link to={"/user"}>مدیریت کاربران</Link>
                 </li>
               )}
               {user?.isAdmin && (

@@ -4,6 +4,7 @@ import Favorites from "../pages/Favorites";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
 import ShoppingProgress from "../pages/ShoppingProgress";
+import User from "../pages/User";
 
 const router: RouteObject[] = [
   {
@@ -35,6 +36,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout isCenter={true}>
         <Profile />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/user",
+    element: (
+      <PageLayout>
+        <User />
       </PageLayout>
     ),
   },
