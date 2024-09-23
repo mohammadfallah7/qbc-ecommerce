@@ -38,6 +38,7 @@ const Register = () => {
         email: data.email,
         password: data.password,
         isAdmin: true,
+        id: Date.now(),
       });
       navigate("/");
       reset();
@@ -52,8 +53,7 @@ const Register = () => {
           <Input
             error={errors.name}
             label="نام"
-            placeholder="محمد فلاح"
-            value="محمد فلاح"
+            placeholder="نام خود را وارد کنید"
             useFormRegister={register("name", { required: true, minLength: 3 })}
           />
           {errors.name?.type === "required" && (
@@ -65,9 +65,8 @@ const Register = () => {
           <Input
             error={errors.email}
             label="ایمیل"
-            placeholder="test@gmail.com"
+            placeholder="ایمیل خود را وارد کنید"
             type="email"
-            value="mohammad@gmail.com"
             useFormRegister={register("email", {
               required: true,
               minLength: 3,
@@ -82,9 +81,8 @@ const Register = () => {
           <Input
             error={errors.password}
             label="رمز عبور"
-            placeholder="12345678"
+            placeholder="رمز عبور خود را وارد کنید"
             type="password"
-            value="12345678"
             useFormRegister={register("password", {
               required: true,
               minLength: 8,
@@ -103,9 +101,8 @@ const Register = () => {
           <Input
             error={errors.repeatPassword}
             label="تکرار رمز عبور"
-            placeholder="12345678"
+            placeholder="رمز عبور خود را دوباره وارد کنید"
             type="password"
-            value="12345678"
             useFormRegister={register("repeatPassword", {
               required: true,
               minLength: 8,
@@ -122,7 +119,7 @@ const Register = () => {
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
           )}
 
-          <button className="btn btn-secondary">ثبت نام</button>
+          <button className="btn btn-secondary mt-5">ثبت نام</button>
         </form>
         <div className="flex items-center gap-2 mt-5 text-sm">
           <span>عضو هستید؟</span>
