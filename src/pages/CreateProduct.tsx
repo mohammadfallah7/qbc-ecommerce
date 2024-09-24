@@ -12,7 +12,10 @@ type CreateProductFormData = {
 };
 
 const CreateProduct = () => {
-  const { register } = useForm<CreateProductFormData>();
+  const {
+    register,
+    formState: { errors },
+  } = useForm<CreateProductFormData>();
   const [fileState, setFileState] = useState<string>("");
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -54,8 +57,17 @@ const CreateProduct = () => {
           <Input
             label="نام"
             placeholder="نام محصول را وارد نمایید"
-            useFormRegister={register("productTitle")}
+            useFormRegister={register("productTitle", {
+              required: true,
+              minLength: 3,
+            })}
           />
+          {errors.productTitle?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.productTitle?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
+          )}
         </div>
         <div className="col-span-2 flex gap-3">
           <Input

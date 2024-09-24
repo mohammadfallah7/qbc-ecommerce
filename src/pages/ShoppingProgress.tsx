@@ -65,18 +65,27 @@ const ShoppingProgress = () => {
             placeholder="میدان ولیعهد"
             useFormRegister={register("address", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.city}
             label="شهر"
             placeholder="تهران"
             useFormRegister={register("city", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.country}
             label="کشور"
             placeholder="ایران"
             useFormRegister={register("country", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.zipCode}
             label="کد پستی"
@@ -87,6 +96,9 @@ const ShoppingProgress = () => {
               required: true,
             })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Radio
             error={errors.paymentMethod}
             useFormRegister={register("paymentMethod", { required: true })}

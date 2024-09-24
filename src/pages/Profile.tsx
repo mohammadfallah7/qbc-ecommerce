@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
+import useUser from "../stores/user-store";
 
 type ProfileFormData = {
   name: string;
@@ -21,6 +22,16 @@ const Profile = () => {
     console.log(data);
     reset();
   };
+  const { user } = useUser();
+
+  if (user) {
+    reset({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      repeatPassword: user.password,
+    });
+  }
 
   return (
     <div className="w-2/3">
@@ -28,28 +39,29 @@ const Profile = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="نام"
-          placeholder="محمد فلاح"
           error={errors.name}
           useFormRegister={register("name", { required: true })}
+          value={user?.name}
         />
         <Input
           label="ایمیل"
-          placeholder="test@gmail.com"
           type="email"
           error={errors.email}
           useFormRegister={register("email", { required: true })}
+          value={user?.email}
         />
         <Input
           label="رمز عبور"
-          placeholder="12345678"
           type="password"
+          placeholder="رمز عبور خود را وارد کنید"
           error={errors.password}
           useFormRegister={register("password", { required: true })}
+          value={user?.password}
         />
         <Input
           label="تکرار رمز عبور"
-          placeholder="12345678"
           type="password"
+          placeholder="رمز عبور خود را دوباره وارد کنید"
           error={errors.repeatPassword}
           useFormRegister={register("repeatPassword", { required: true })}
         />
