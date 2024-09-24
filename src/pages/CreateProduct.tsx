@@ -14,18 +14,30 @@ type CreateProductFormData = {
 const CreateProduct = () => {
   const { register } = useForm<CreateProductFormData>();
   const [fileState, setFileState] = useState<string>("");
-  const handleUpload = (e) => {
-    setFileState(URL.createObjectURL(e.target.files[0]));
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFileState(URL.createObjectURL(e.target.files[0]));
+    }
   };
   return (
     <div className="w-2/3">
       <h1 className="mb-5">محصول جدید</h1>
       <div className="grid grid-cols-2 ">
         <img className="hidden" />
-        <div className="col-span-2 flex items-center justify-center border-dashed ">
+        <div className="col-span-2 flex flex-col items-center justify-center border-dashed ">
+          {fileState && (
+            <div>
+              <img
+                src={fileState}
+                className="rounded-md"
+                width={300}
+                height={300}
+              />
+            </div>
+          )}
           <label
             htmlFor="imageUpload"
-            className="border-dashed border border-zinc-700 rounded-lg w-full h-24 flex items-center justify-center"
+            className="border-dashed border border-zinc-700 rounded-lg mt-5 w-full h-24 flex items-center justify-center"
           >
             آپلود عکس
           </label>
@@ -37,13 +49,6 @@ const CreateProduct = () => {
             accept="image/jpg image/png"
             hidden
           />
-          {fileState ? (
-            <div>
-              <img src={fileState} />
-            </div>
-          ) : (
-            <p>no image is uploaded</p>
-          )}
         </div>
         <div className="col-span-2 ">
           <Input
