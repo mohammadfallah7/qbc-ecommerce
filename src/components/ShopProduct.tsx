@@ -2,6 +2,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import { ProductEntity } from "../types/product-entity";
 import useCart from "../stores/cart-store";
 import { Link } from "react-router-dom";
+import { IoCaretBack } from "react-icons/io5";
 
 interface Props {
   product: ProductEntity;
@@ -29,6 +30,7 @@ const ShopProduct = ({ product }: Props) => {
           <Link to={`/products/${product.id}?content=add-comment`}>
             <button className="btn btn-secondary btn-sm text-xs">
               مشاهده بیشتر
+              <IoCaretBack />
             </button>
           </Link>
           <LuShoppingCart

@@ -15,6 +15,7 @@ const ProductPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const [content, setContent] = useState("comments");
+  const [inCart, setInCart] = useState(false);
 
   const product = products.find(
     (product) => product.id === parseInt(id || "1")
@@ -55,12 +56,26 @@ const ProductPage = () => {
             ))}
           </select>
         </div>
-        <button
-          className="btn btn-secondary text-xs btn-sm"
-          onClick={() => addProduct(product!)}
-        >
-          افزودن به سبد خرید
-        </button>
+        {!inCart ? (
+          <button
+            className="btn btn-secondary text-xs btn-sm"
+            onClick={() => {
+              addProduct(product!);
+              setInCart(true);
+            }}
+          >
+            افزودن به سبد خرید
+          </button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <label className="mr-2">تعداد:</label>
+            <select className="select select-bordered select-xs w-full max-w-xs">
+              {[1, 2, 3, 4, 5].map((number) => (
+                <option key={number}>{number}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
       <div className="col-span-4 md:col-span-1 flex flex-col gap-7">
         <Link

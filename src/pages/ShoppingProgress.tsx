@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { shippingPrice } from "../utils/constants";
 import { finalPrice, taxPrice } from "../utils/calculate-price";
 import { useNavigate } from "react-router-dom";
+import { IoCaretBack } from "react-icons/io5";
 
 type ShoppingProgressFormData = {
   address: string;
@@ -112,6 +113,14 @@ const ShoppingProgress = () => {
       )}
       {step === 3 && (
         <div className="flex flex-col gap-5">
+          <button
+            type="button"
+            onClick={() => setStep(2)}
+            className="btn btn-secondary btn-sm w-fit mt-5 rounded-full"
+          >
+            <IoCaretBack style={{ transform: "rotate(180deg)" }} />
+            بازگشت
+          </button>
           <div className="overflow-x-auto">
             <CartProductsTable products={cartProducts} />
           </div>
