@@ -1,5 +1,6 @@
 import ProductStars from "../components/ProductStars";
 import useComments from "../stores/comment-store";
+import Warning from "./Warning";
 
 const ProductComments = () => {
   const comments = useComments((state) => state.comments);
@@ -23,7 +24,9 @@ const ProductComments = () => {
       ))}
     </div>
   ) : (
-    <p>نظری برای این محصول وجود ندارد.</p>
+    <div>
+      <Warning isSmall={true} title={"هیچ نظری برای این محصول وجود ندارد"} />
+    </div>
   );
 };
 
