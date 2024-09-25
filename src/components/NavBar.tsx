@@ -22,12 +22,12 @@ const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   const cartProductsLength = useCart((state) => state.cartProducts.length);
-  const { user, logout, id, isAdmin } = useUser();
+  const { logout, id, isAdmin } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   useEffect(() => {
     return () => setShowMenu(false);
-  }, [user]);
+  }, [id]);
 
   useEffect(() => {
     themeChange(false);

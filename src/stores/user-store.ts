@@ -28,18 +28,20 @@ const useUser = create<UserStore>((set) => ({
   login: (id, isAdmin) => {
     localStorage.setItem("id", id);
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
+    set(() => ({ id, isAdmin }));
   },
   deleteUser: (id) =>
     set((state) => ({ users: state.users.filter((user) => user.id !== id) })),
   logout: () => {
-    localStorage.removeItem("token");
-    set(() => ({ user: undefined, token: undefined }));
+    localStorage.removeItem("id");
+    localStorage.removeItem("isAdmin");
+    set(() => ({ id: undefined, isAdmin: undefined }));
   },
   initializeAuth: () => {
+    const isAdmin = JSON.parse(localStorage.getItem("isAdmin") || "false");
     const id = localStorage.getItem("id");
-    const isAdmin = JSON.parse(localStorage.getItem("isAdmin") || "");
-    if (id) set(() => ({ id }));
     if (isAdmin) set(() => ({ isAdmin }));
+    if (id) set(() => ({ id }));
   },
 }));
 
