@@ -22,7 +22,7 @@ const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
   const cartProductsLength = useCart((state) => state.cartProducts.length);
-  const { user, token, logout } = useUser();
+  const { user, logout, id, isAdmin } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   useEffect(() => {
@@ -88,29 +88,29 @@ const NavBar = () => {
           />
         )}
 
-        {token && (
+        {id && (
           <>
             <ul
               className={`absolute right-2 bottom-10 menu w-36 bg-base-200 rounded-box ${
                 showMenu ? "block" : "hidden"
               }`}
             >
-              {user?.isAdmin && (
+              {isAdmin && (
                 <li className="mb-3">
                   <Link to={"/dashboard"}>داشبورد</Link>
                 </li>
               )}
-              {user?.isAdmin && (
+              {isAdmin && (
                 <li className="mb-3">
                   <Link to={"/create-product"}>محصول جدید</Link>
                 </li>
               )}
-              {user?.isAdmin && (
+              {isAdmin && (
                 <li className="mb-3">
                   <Link to={"/user"}>مدیریت کاربران</Link>
                 </li>
               )}
-              {user?.isAdmin && (
+              {isAdmin && (
                 <li className="mb-3">
                   <Link to={"/order"}>سفارشات</Link>
                 </li>
@@ -126,7 +126,7 @@ const NavBar = () => {
               className="text-sm flex items-center gap-1 cursor-pointer"
               onClick={() => setShowMenu(!showMenu)}
             >
-              {user?.isAdmin ? "ادمین" : "کاربر"}
+              {isAdmin ? "ادمین" : "کاربر"}
               {showMenu ? (
                 <FaChevronUp size={10} />
               ) : (
@@ -136,7 +136,7 @@ const NavBar = () => {
           </>
         )}
 
-        {!token && (
+        {!id && (
           <Link to={"/login"}>
             <LuLogIn
               size={navIconSize}
@@ -145,7 +145,7 @@ const NavBar = () => {
             />
           </Link>
         )}
-        {!token && (
+        {!id && (
           <Link to={"/register"}>
             <LuUserPlus
               size={navIconSize}

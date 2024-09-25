@@ -28,7 +28,6 @@ const useCart = create<CartStore>((set) => ({
   addToOrdered: () =>
     set((state) => ({
       OrderedProduct: [...state.OrderedProduct, ...state.cartProducts],
-      cartProducts: [],
     })),
 }));
 

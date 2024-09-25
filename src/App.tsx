@@ -6,7 +6,7 @@ import useUser from "./stores/user-store";
 import { useEffect } from "react";
 
 const App = () => {
-  const { initializeAuth, token } = useUser();
+  const { initializeAuth, id } = useUser();
 
   useEffect(() => {
     initializeAuth();
@@ -16,9 +16,7 @@ const App = () => {
     ...publicRouter.routes,
     {
       path: "/*",
-      element: (
-        <PrivateRouter element={<AppRouter />} isAuthenticated={!!token} />
-      ),
+      element: <PrivateRouter element={<AppRouter />} isAuthenticated={!!id} />,
     },
   ]);
 

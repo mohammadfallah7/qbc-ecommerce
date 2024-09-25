@@ -7,8 +7,10 @@ import useUser from "../stores/user-store";
 import useNavItem from "../stores/nav-item-store";
 import { useEffect } from "react";
 import Input from "../components/Input";
+import apiClient from "../api/api-client";
+import { LoginResponse } from "../types/login-response";
 
-type LoginFormData = {
+export type LoginFormData = {
   email: string;
   password: string;
 };
@@ -22,18 +24,22 @@ const Login = () => {
     reset,
     formState: { errors },
   } = useForm<LoginFormData>();
-  const user = useUser((state) => state.user);
   const navigate = useNavigate();
+  const { login } = useUser();
 
   useEffect(() => {
     changeNavItem("login");
   });
 
   const onSubmit = (data: LoginFormData) => {
-    if (user?.password === data.password && user.email === data.email) {
-      navigate("/");
-      reset();
-    }
+    apiClient
+      .post<LoginFormData, LoginResponse>("/users/auth", data)
+      .then(({ data }) => {
+        console.log("response", data);
+        login(data._id, data.isAdmin);
+        navigate("/");
+      });
+    reset();
   };
 
   return (
@@ -46,6 +52,7 @@ const Login = () => {
             label="ایمیل"
             placeholder="ایمیل خود را وارد کنید"
             type="email"
+            value="gp1@qbc.com"
             useFormRegister={register("email", {
               required: true,
               minLength: 3,
@@ -62,9 +69,10 @@ const Login = () => {
             label="رمز عبور"
             placeholder="رمز عبور خود را وارد کنید"
             type="password"
+            value="Group1"
             useFormRegister={register("password", {
               required: true,
-              minLength: 8,
+              minLength: 6,
               maxLength: 12,
             })}
           />
@@ -72,7 +80,7 @@ const Login = () => {
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
           {errors.password?.type === "minLength" && (
-            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+            <p className="text-error text-sm">حداقل باید 6 کارکتر باشد</p>
           )}
           {errors.password?.type === "maxLength" && (
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
