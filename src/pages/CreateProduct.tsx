@@ -26,7 +26,7 @@ const CreateProduct = () => {
   return (
     <div className="w-2/3">
       <h1 className="mb-5">محصول جدید</h1>
-      <div className="grid grid-cols-2 ">
+      <form className="grid grid-cols-2 ">
         <img className="hidden" />
         <div className="col-span-2 flex flex-col items-center justify-center border-dashed ">
           {fileState && (
@@ -58,15 +58,15 @@ const CreateProduct = () => {
           <Input
             label="نام"
             placeholder="نام محصول را وارد نمایید"
-            useFormRegister={register("productTitle", {
+            useFormRegister={register("name", {
               required: true,
               minLength: 3,
             })}
           />
-          {errors.productTitle?.type === "required" && (
+          {errors.name?.type === "required" && (
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
-          {errors.productTitle?.type === "minLength" && (
+          {errors.name?.type === "minLength" && (
             <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
           )}
         </div>
