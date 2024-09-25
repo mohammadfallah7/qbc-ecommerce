@@ -8,7 +8,7 @@ interface Props {
   useFormRegister: UseFormRegisterReturn;
   value?: string | number;
   error?: FieldError;
-  showLabel?: boolean;
+  isHidden?: boolean;
   className?: string;
 }
 
@@ -19,25 +19,21 @@ const Input = ({
   useFormRegister,
   value,
   error,
-  showLabel = true,
+  isHidden = false,
   className = "",
 }: Props) => {
   return (
-    <label className="form-control w-full mb-3">
-      {showLabel && (
-        <div className="label">
-          <span className="label-text">{label}</span>
-        </div>
-      )}
-
+    <label className={`form-control w-full mb-3 ${className}`}>
+      <div className="label">
+        <span className="label-text">{label}</span>
+      </div>
       <input
         {...useFormRegister}
+        hidden={isHidden}
         type={type}
         value={value}
         placeholder={placeholder}
-        className={`input input-bordered text-sm ${
-          error && "input-error"
-        } ${className}`}
+        className={`input input-bordered text-sm ${error && "input-error"}`}
       />
     </label>
   );

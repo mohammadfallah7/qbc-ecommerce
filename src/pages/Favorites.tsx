@@ -7,27 +7,24 @@ import Warning from "../components/Warning";
 const Favorites = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
   const products = useProducts((state) => state.products);
-  const favoriteProducts = products.filter((product) => product.isFavorite);
 
   useEffect(() => {
     changeNavItem("favorites");
   });
 
-  if (favoriteProducts.length) {
-    return (
-      <div className="gap-5 grid grid-cols-4">
-        {favoriteProducts.map((product) => (
+  return products.filter((product) => product.isFavorite).length > 0 ? (
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
+      {products
+        .filter((product) => product.isFavorite)
+        .map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
-      </div>
-    );
-  } else {
-    return (
-      <div className="m-14">
-        <Warning title="محصول مورد علاقه ای وجود ندارد." />
-      </div>
-    );
-  }
+    </div>
+  ) : (
+    <div className="mt-5">
+      <Warning title="محصول مورد علاقه ای وجود ندارد." />
+    </div>
+  );
 };
 
 export default Favorites;

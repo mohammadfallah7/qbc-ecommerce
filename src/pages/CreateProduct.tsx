@@ -4,11 +4,12 @@ import TextArea from "../components/TextArea";
 import { useState } from "react";
 
 type CreateProductFormData = {
-  productTitle: string;
+  name: string;
   price: number;
-  brand: string;
+  category: string;
   description: string;
-  image: string;
+  quantity: number;
+  image: FileList;
 };
 
 const CreateProduct = () => {
@@ -79,7 +80,7 @@ const CreateProduct = () => {
           <Input
             label="برند"
             placeholder="برند محصول را وارد نمایید"
-            useFormRegister={register("brand")}
+            useFormRegister={register("category")}
           />
         </div>
         <div className="col-span-2">
@@ -89,17 +90,22 @@ const CreateProduct = () => {
           <Input
             label="تعداد قابل خرید"
             placeholder="تعداد قابل خرید را وارد نمایید"
-            useFormRegister={register("price")}
+            useFormRegister={register("quantity")}
           />
 
           <Input
             label="موجودی"
             placeholder="موجودی"
-            useFormRegister={register("brand")}
+            useFormRegister={register("quantity")}
           />
         </div>
-      </div>
-      <button className="btn btn-sm btn-secondary mt-5">ساخت محصول جدید</button>
+        <button
+          type="submit"
+          className="btn btn-sm text-xs btn-secondary self-start w-36"
+        >
+          ساخت محصول جدید
+        </button>
+      </form>
     </div>
   );
 };

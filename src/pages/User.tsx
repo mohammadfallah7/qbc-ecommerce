@@ -8,8 +8,7 @@ const User = () => {
   const { users, deleteUser } = useUser();
   return (
     <div className="overflow-x-auto">
-      <table className="table mt-14">
-        {/* head */}
+      <table className="table">
         <thead>
           <tr>
             <th>ID</th>
@@ -21,8 +20,8 @@ const User = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr>
-              <th>{user.id}</th>
+            <tr key={user.id}>
+              <td>{user.id}</td>
               <td>
                 <div className="flex items-center gap-1">
                   <BiEditAlt className="cursor-pointer" />

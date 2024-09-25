@@ -73,7 +73,7 @@ const NavBar = () => {
           />
         </Link>
       </div>
-      <div className="flex flex-col gap-7">
+      <div className="flex items-center flex-col gap-7">
         {theme === "light" ? (
           <LuMoon
             size={navIconSize}
@@ -91,7 +91,7 @@ const NavBar = () => {
         {token && (
           <>
             <ul
-              className={`absolute right-0 bottom-10 menu w-36 bg-base-200 rounded-box ${
+              className={`absolute right-2 bottom-10 menu w-36 bg-base-200 rounded-box ${
                 showMenu ? "block" : "hidden"
               }`}
             >

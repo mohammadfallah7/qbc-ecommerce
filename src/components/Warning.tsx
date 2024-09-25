@@ -1,10 +1,14 @@
 interface WarningProps {
   title: string;
+  isSmall?: boolean;
 }
 
-const Warning: React.FC<WarningProps> = ({ title }) => {
+const Warning: React.FC<WarningProps> = ({ title, isSmall = false }) => {
   return (
-    <div role="alert" className="alert alert-warning">
+    <div
+      role="alert"
+      className={`alert alert-warning ${isSmall && "max-w-xl"}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6 shrink-0 stroke-current"
