@@ -112,7 +112,7 @@ const NavBar = () => {
               )}
               {user?.isAdmin && (
                 <li className="mb-3">
-                  <Link to={"/"}>سفارشات</Link>
+                  <Link to={"/order"}>سفارشات</Link>
                 </li>
               )}
               <li className="mb-3">

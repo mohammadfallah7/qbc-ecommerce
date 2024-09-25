@@ -6,6 +6,7 @@ import Profile from "../pages/Profile";
 import ShoppingProgress from "../pages/ShoppingProgress";
 import User from "../pages/User";
 import CreateProduct from "../pages/CreateProduct";
+import Order from "../pages/Order";
 
 const router: RouteObject[] = [
   {
@@ -53,6 +54,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout isCenter={true}>
         <CreateProduct />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/order",
+    element: (
+      <PageLayout>
+        <Order />
       </PageLayout>
     ),
   },

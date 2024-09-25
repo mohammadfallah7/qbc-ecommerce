@@ -7,6 +7,7 @@ import CartProductsTable from "../components/CartProductsTable";
 import { Link } from "react-router-dom";
 import { shippingPrice } from "../utils/constants";
 import { finalPrice, taxPrice } from "../utils/calculate-price";
+import { useNavigate } from "react-router-dom";
 
 type ShoppingProgressFormData = {
   address: string;
@@ -24,7 +25,8 @@ const ShoppingProgress = () => {
     reset,
     formState: { errors },
   } = useForm<ShoppingProgressFormData>();
-  const { shippingInfo, addShippingInfo, cartProducts } = useCart();
+  const { shippingInfo, addShippingInfo, cartProducts, addToOrdered } =
+    useCart();
 
   useEffect(() => {
     if (shippingInfo) setStep((state) => (state < 3 ? state + 1 : state));
@@ -39,6 +41,11 @@ const ShoppingProgress = () => {
     (acc, current) => (acc += current.price),
     0
   );
+  const navigate = useNavigate();
+  const handlePlaceOrder = () => {
+    addToOrdered();
+    navigate("/order");
+  };
 
   return (
     <div>
@@ -58,18 +65,27 @@ const ShoppingProgress = () => {
             placeholder="میدان ولیعهد"
             useFormRegister={register("address", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.city}
             label="شهر"
             placeholder="تهران"
             useFormRegister={register("city", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.country}
             label="کشور"
             placeholder="ایران"
             useFormRegister={register("country", { required: true })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Input
             error={errors.zipCode}
             label="کد پستی"
@@ -80,6 +96,9 @@ const ShoppingProgress = () => {
               required: true,
             })}
           />
+          {errors.address?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
           <Radio
             error={errors.paymentMethod}
             useFormRegister={register("paymentMethod", { required: true })}
@@ -127,7 +146,11 @@ const ShoppingProgress = () => {
               </div>
             </div>
           </div>
-          <Link to={"/checkout"} className="btn btn-secondary rounded-full">
+          <Link
+            to={"/checkout"}
+            onClick={handlePlaceOrder}
+            className="btn btn-secondary rounded-full"
+          >
             ثبت سفارش
           </Link>
         </div>

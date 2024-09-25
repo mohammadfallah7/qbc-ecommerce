@@ -19,6 +19,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(1999),
       isFavorite: false,
       comments: 3,
+      ispaid: true,
+      shippingStatus: "not_sent",
     },
     {
       id: 2,
@@ -31,6 +33,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(2003),
       isFavorite: false,
       comments: 6,
+      ispaid: false,
+      shippingStatus: "sent",
     },
     {
       id: 3,
@@ -43,6 +47,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(2023),
       isFavorite: false,
       comments: 96,
+      ispaid: false,
+      shippingStatus: "in_progress",
     },
     {
       id: 4,
@@ -55,6 +61,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(2015),
       isFavorite: false,
       comments: 5,
+      ispaid: true,
+      shippingStatus: "sent",
     },
     {
       id: 5,
@@ -67,6 +75,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(2010),
       isFavorite: false,
       comments: 13,
+      ispaid: false,
+      shippingStatus: "not_sent",
     },
     {
       id: 6,
@@ -79,6 +89,8 @@ const useProducts = create<ProductsStore>((set) => ({
       update: new Date(2020),
       isFavorite: false,
       comments: 5,
+      ispaid: true,
+      shippingStatus: "in_progress",
     },
   ],
   likeProduct: (id) =>

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
+import { useState } from "react";
 
 type CreateProductFormData = {
   name: string;
@@ -12,31 +13,62 @@ type CreateProductFormData = {
 };
 
 const CreateProduct = () => {
-  const { register, handleSubmit } = useForm<CreateProductFormData>();
-
-  const onSubmit = (data: CreateProductFormData) => {
-    console.log(data);
+  const {
+    register,
+    formState: { errors },
+  } = useForm<CreateProductFormData>();
+  const [fileState, setFileState] = useState<string>("");
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFileState(URL.createObjectURL(e.target.files[0]));
+    }
   };
-
   return (
-    <div className="w-2/3 flex flex-col gap-4">
-      <h1 className="text-lg">محصول جدید</h1>
-      <form className="grid grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
-        <div className="col-span-2">
-          <Input
-            label="آپلود عکس"
+    <div className="w-2/3">
+      <h1 className="mb-5">محصول جدید</h1>
+      <div className="grid grid-cols-2 ">
+        <img className="hidden" />
+        <div className="col-span-2 flex flex-col items-center justify-center border-dashed ">
+          {fileState && (
+            <div>
+              <img
+                src={fileState}
+                className="rounded-md"
+                width={300}
+                height={300}
+              />
+            </div>
+          )}
+          <label
+            htmlFor="imageUpload"
+            className="border-dashed border border-zinc-700 rounded-lg mt-5 w-full h-24 flex items-center justify-center"
+          >
+            آپلود عکس
+          </label>
+          <input
             type="file"
-            useFormRegister={register("image")}
-            isHidden={true}
-            className="border border-dashed rounded-lg h-20 cursor-pointer input-bordered justify-center items-center"
+            id="imageUpload"
+            className=""
+            onChange={handleUpload}
+            accept="image/jpg image/png"
+            hidden
           />
         </div>
         <div className="col-span-2 ">
           <Input
             label="نام"
             placeholder="نام محصول را وارد نمایید"
-            useFormRegister={register("name")}
+            useFormRegister={register("productTitle", {
+              required: true,
+              minLength: 3,
+            })}
           />
+          {errors.productTitle?.type === "required" && (
+            <p className="text-error text-sm">این فیلد اجباری است.</p>
+          )}
+          {errors.productTitle?.type === "minLength" && (
+            <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
+          )}
         </div>
         <div className="col-span-2 flex gap-3">
           <Input

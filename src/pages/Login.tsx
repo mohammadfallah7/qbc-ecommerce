@@ -44,7 +44,7 @@ const Login = () => {
           <Input
             error={errors.email}
             label="ایمیل"
-            placeholder="test@gmail.com"
+            placeholder="ایمیل خود را وارد کنید"
             type="email"
             useFormRegister={register("email", {
               required: true,
@@ -60,7 +60,7 @@ const Login = () => {
           <Input
             error={errors.password}
             label="رمز عبور"
-            placeholder="12345678"
+            placeholder="رمز عبور خود را وارد کنید"
             type="password"
             useFormRegister={register("password", {
               required: true,
