@@ -14,7 +14,7 @@ const Cart = () => {
   });
 
   return cartProducts.length > 0 ? (
-    <div className="grid grid-cols-2 grid-rows-subgrid gap-7">
+    <div className="grid grid-cols-2 mb-14 grid-rows-subgrid gap-7">
       <div className="col-span-2">
         {cartProducts.map((cartProduct) => (
           <CartProduct key={cartProduct.id} cartProduct={cartProduct} />

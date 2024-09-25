@@ -7,6 +7,7 @@ import ShoppingProgress from "../pages/ShoppingProgress";
 import User from "../pages/User";
 import CreateProduct from "../pages/CreateProduct";
 import Order from "../pages/Order";
+import Dashboard from "../pages/Dashboard";
 
 const router: RouteObject[] = [
   {
@@ -62,6 +63,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout>
         <Order />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PageLayout>
+        <Dashboard />
       </PageLayout>
     ),
   },
