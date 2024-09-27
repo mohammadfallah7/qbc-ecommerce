@@ -6,7 +6,6 @@ interface UserStore {
   users: UserEntity[];
   id: string | undefined;
   isAdmin: boolean | undefined;
-  register: (newUser: UserEntity) => void;
   login: (id: string, isAdmin: boolean) => void;
   logout: () => void;
   deleteUser: (id: number) => void;
@@ -18,13 +17,6 @@ const useUser = create<UserStore>((set) => ({
   users: [],
   id: undefined,
   isAdmin: undefined,
-  register: (newUser) => {
-    set((state) => ({
-      users: [...state.users, newUser],
-      user: newUser,
-      token: "JWT",
-    }));
-  },
   login: (id, isAdmin) => {
     localStorage.setItem("id", id);
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
