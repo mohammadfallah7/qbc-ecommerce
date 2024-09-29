@@ -1,3 +1,4 @@
+import { CategoryModel } from "./category.model";
 import { ReviewModel } from "./review.model";
 
 export type ProductModel = {
@@ -5,7 +6,7 @@ export type ProductModel = {
   name: string;
   image: string;
   quantity: number;
-  category: string;
+  category?: CategoryModel;
   description: string;
   rating: number;
   numReviews: number;
