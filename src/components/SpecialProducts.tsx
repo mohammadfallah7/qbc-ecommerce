@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
-import { ProductEntity } from "../types/product-entity";
+import { ProductModel } from "../types/product.model";
 
 interface Props {
-  products: ProductEntity[];
+  products: ProductModel[] | undefined;
 }
 
 const SpecialProducts = ({ products }: Props) => {
@@ -18,8 +18,8 @@ const SpecialProducts = ({ products }: Props) => {
         </Link>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {products?.map((product) => (
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </>
