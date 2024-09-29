@@ -10,7 +10,7 @@ import Input from "../components/Input";
 import apiClient from "../api/api-client";
 import { useMutation } from "@tanstack/react-query";
 import Warning from "../components/Warning";
-import { LoginResponse } from "../types/login-response";
+import { AuthResponse } from "../types/login-response";
 
 export type LoginFormData = {
   email: string;
@@ -29,7 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useUser();
   const { mutate, error, isPending } = useMutation<
-    LoginResponse,
+    AuthResponse,
     Error,
     LoginFormData
   >({
@@ -84,7 +84,6 @@ const Login = () => {
               label="رمز عبور"
               placeholder="رمز عبور خود را وارد کنید"
               type="password"
-              value="Group1"
               useFormRegister={register("password", {
                 required: true,
                 minLength: 6,

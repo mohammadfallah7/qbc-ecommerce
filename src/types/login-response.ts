@@ -1,4 +1,4 @@
-export type LoginResponse = {
+export type AuthResponse = {
   data: {
     _id: string;
     username: string;

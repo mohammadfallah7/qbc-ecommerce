@@ -7,12 +7,16 @@ import useUser from "../stores/user-store";
 import useNavItem from "../stores/nav-item-store";
 import { useEffect } from "react";
 import Input from "../components/Input";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
+import { AuthResponse } from "../types/login-response";
+import Warning from "../components/Warning";
 
 type RegisterFormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
-  repeatPassword: string;
+  confirm_Password: string;
 };
 
 const Register = () => {
@@ -24,42 +28,56 @@ const Register = () => {
     reset,
     formState: { errors },
   } = useForm<RegisterFormData>();
-  const registerUser = useUser((state) => state.register);
+  const login = useUser((state) => state.login);
   const navigate = useNavigate();
+  const { error, mutate, isPending } = useMutation<
+    AuthResponse,
+    Error,
+    RegisterFormData
+  >({
+    mutationKey: ["register"],
+    mutationFn: (data: RegisterFormData) =>
+      apiClient.post("/users", data).then((response) => {
+        console.log(response.data);
+        navigate("/");
+        login(response.data._id, response.data.isAdmin);
+        return response.data;
+      }),
+  });
 
   useEffect(() => {
     changeNavItem("register");
   });
 
   const onSubmit = (data: RegisterFormData) => {
-    if (data.password === data.repeatPassword) {
-      registerUser({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        isAdmin: true,
-        id: Date.now(),
-      });
-      navigate("/");
-      reset();
-    }
+    mutate(data);
+    reset();
   };
 
   return (
-    <div className="grid grid-cols-2 gap-14 items-center">
+    <div className="grid grid-cols-2 gap-14 items-center relative">
+      {error && (
+        <Warning
+          title={error.message}
+          className="absolute top-0 right-0 w-1/2 alert-error"
+        />
+      )}
       <div className="col-span-2 order-2 sm:order-1 md:col-span-1">
         <h2 className="text-xl mb-5">ثبت نام</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
-            error={errors.name}
+            error={errors.username}
             label="نام"
             placeholder="نام خود را وارد کنید"
-            useFormRegister={register("name", { required: true, minLength: 3 })}
+            useFormRegister={register("username", {
+              required: true,
+              minLength: 3,
+            })}
           />
-          {errors.name?.type === "required" && (
+          {errors.username?.type === "required" && (
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
-          {errors.name?.type === "minLength" && (
+          {errors.username?.type === "minLength" && (
             <p className="text-error text-sm">حداقل باید 3 کارکتر باشد</p>
           )}
           <Input
@@ -99,27 +117,32 @@ const Register = () => {
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
           )}
           <Input
-            error={errors.repeatPassword}
+            error={errors.confirm_Password}
             label="تکرار رمز عبور"
             placeholder="رمز عبور خود را دوباره وارد کنید"
             type="password"
-            useFormRegister={register("repeatPassword", {
+            useFormRegister={register("confirm_Password", {
               required: true,
               minLength: 8,
               maxLength: 12,
             })}
           />
-          {errors.repeatPassword?.type === "required" && (
+          {errors.confirm_Password?.type === "required" && (
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
-          {errors.repeatPassword?.type === "minLength" && (
+          {errors.confirm_Password?.type === "minLength" && (
             <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
           )}
-          {errors.repeatPassword?.type === "maxLength " && (
+          {errors.confirm_Password?.type === "maxLength " && (
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
           )}
 
-          <button className="btn btn-secondary mt-5">ثبت نام</button>
+          <button className="btn btn-secondary mt-5">
+            ثبت نام
+            {isPending && (
+              <span className="loading loading-ring loading-xs"></span>
+            )}
+          </button>
         </form>
         <div className="flex items-center gap-2 mt-5 text-sm">
           <span>عضو هستید؟</span>

@@ -17,6 +17,8 @@ import { themeChange } from "theme-change";
 import useCart from "../stores/cart-store";
 import useUser from "../stores/user-store";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
 
 const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
@@ -24,6 +26,13 @@ const NavBar = () => {
   const cartProductsLength = useCart((state) => state.cartProducts.length);
   const { logout, id, isAdmin } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const { mutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: () =>
+      apiClient.post("/users/logout").then(() => {
+        logout();
+      }),
+  });
 
   useEffect(() => {
     return () => setShowMenu(false);
@@ -118,7 +127,7 @@ const NavBar = () => {
               <li className="mb-3">
                 <Link to={"/profile"}>پروفایل</Link>
               </li>
-              <li onClick={() => logout()}>
+              <li onClick={() => mutate()}>
                 <a>خروج از حساب</a>
               </li>
             </ul>
