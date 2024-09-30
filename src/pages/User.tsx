@@ -1,11 +1,19 @@
 import { FaTrash } from "react-icons/fa6";
-import useUser from "../stores/user-store";
 import { PiCheckFatFill } from "react-icons/pi";
 import { CgClose } from "react-icons/cg";
 import { BiEditAlt } from "react-icons/bi";
+import useUsers from "../hooks/useUsers";
 
 const User = () => {
-  const { users, deleteUser } = useUser();
+  const { data: users, isLoading } = useUsers();
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center mt-12">
+        <span className="loading loading-ring w-14"></span>
+      </div>
+    );
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -19,13 +27,13 @@ const User = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
+          {users?.map((user) => (
+            <tr key={user._id}>
+              <td>{user._id}</td>
               <td>
                 <div className="flex items-center gap-1">
                   <BiEditAlt className="cursor-pointer" />
-                  {user.name}
+                  {user.username}
                 </div>
               </td>
               <td>
@@ -43,7 +51,7 @@ const User = () => {
               </td>
               <td>
                 <FaTrash
-                  onClick={() => deleteUser(user.id)}
+                  onClick={() => console.log("delete")}
                   className="text-error cursor-pointer"
                 />
               </td>
