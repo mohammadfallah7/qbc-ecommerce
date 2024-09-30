@@ -4,6 +4,7 @@ import SpecialProducts from "../components/SpecialProducts";
 import useNavItem from "../stores/nav-item-store";
 import ProductSlider from "../components/ProductSlider";
 import useProducts from "../hooks/useProducts";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
@@ -13,12 +14,9 @@ const Home = () => {
     changeNavItem("home");
   });
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center mt-12">
-        <span className="loading loading-ring w-14"></span>
-      </div>
-    );
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="grid grid-cols-2 grid-rows-subgrid gap-14 items-center">

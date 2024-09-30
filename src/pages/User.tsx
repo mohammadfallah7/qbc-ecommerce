@@ -4,17 +4,15 @@ import { CgClose } from "react-icons/cg";
 import { BiEditAlt } from "react-icons/bi";
 import useUsers from "../hooks/useUsers";
 import useDeleteUser from "../hooks/useDeleteUser";
+import Loading from "../components/Loading";
 
 const User = () => {
   const { data: users, isLoading } = useUsers();
   const { mutate } = useDeleteUser();
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center mt-12">
-        <span className="loading loading-ring w-14"></span>
-      </div>
-    );
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="overflow-x-auto">
