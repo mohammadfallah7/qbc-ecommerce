@@ -1,12 +1,12 @@
 import useNavItem from "../stores/nav-item-store";
 import { useEffect } from "react";
-import useProducts from "../stores/products-store";
 import ShopProduct from "../components/ShopProduct";
 import ShopFilter from "../components/ShopFilter";
+import useProducts from "../hooks/useProducts";
 
 const Shop = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const products = useProducts((state) => state.products);
+  const { data: products } = useProducts();
 
   useEffect(() => {
     changeNavItem("shop");
@@ -18,8 +18,8 @@ const Shop = () => {
         <ShopFilter />
       </div>
       <div className="w-full md:w-4/5 grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-        {products.map((product) => (
-          <ShopProduct key={product.id} product={product} />
+        {products?.map((product) => (
+          <ShopProduct key={product._id} product={product} />
         ))}
       </div>
     </div>
