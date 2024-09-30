@@ -3,9 +3,11 @@ import { PiCheckFatFill } from "react-icons/pi";
 import { CgClose } from "react-icons/cg";
 import { BiEditAlt } from "react-icons/bi";
 import useUsers from "../hooks/useUsers";
+import useDeleteUser from "../hooks/useDeleteUser";
 
 const User = () => {
   const { data: users, isLoading } = useUsers();
+  const { mutate } = useDeleteUser();
 
   if (isLoading)
     return (
@@ -51,7 +53,7 @@ const User = () => {
               </td>
               <td>
                 <FaTrash
-                  onClick={() => console.log("delete")}
+                  onClick={() => mutate(user._id)}
                   className="text-error cursor-pointer"
                 />
               </td>
