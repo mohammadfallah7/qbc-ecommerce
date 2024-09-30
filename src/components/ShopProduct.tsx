@@ -1,33 +1,31 @@
 import { LuShoppingCart } from "react-icons/lu";
-import { ProductEntity } from "../types/product-entity";
-import useCart from "../stores/cart-store";
 import { Link } from "react-router-dom";
 import { IoCaretBack } from "react-icons/io5";
+import { ProductModel } from "../types/product.model";
 
 interface Props {
-  product: ProductEntity;
+  product: ProductModel;
 }
 
 const ShopProduct = ({ product }: Props) => {
-  const addProduct = useCart((state) => state.addProduct);
-
   return (
     <div className="card card-compact bg-base-100 shadow">
       <figure className="bg-base-300 w-full h-40 relative">
+        <img src={product.image} alt={product.name} />
         <div className="badge badge-secondary text-xs absolute right-3 bottom-3">
-          {product.brand}
+          {product.category?.name || "Uncategorized"}
         </div>
       </figure>
       <div className="card-body">
         <div className="flex justify-between">
-          <h2 className="text-lg">{product.title}</h2>
+          <h2 className="text-lg">{product.name}</h2>
           <span className="text-secondary">
             {product.price.toLocaleString()} تومان
           </span>
         </div>
         <p>{product.description}</p>
         <div className="card-actions items-center justify-between mt-2">
-          <Link to={`/products/${product.id}?content=add-comment`}>
+          <Link to={`/products/${product._id}?content=add-comment`}>
             <button className="btn btn-secondary btn-sm text-xs">
               مشاهده بیشتر
               <IoCaretBack />
@@ -36,7 +34,7 @@ const ShopProduct = ({ product }: Props) => {
           <LuShoppingCart
             className="cursor-pointer"
             size={20}
-            onClick={() => addProduct(product)}
+            onClick={() => console.log("add products to cart")}
           />
         </div>
       </div>
