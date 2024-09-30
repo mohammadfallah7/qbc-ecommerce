@@ -1,27 +1,28 @@
 import { useForm } from "react-hook-form";
-import useComments from "../stores/comment-store";
 import TextArea from "./TextArea";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
 
 type FormData = {
-  rate: 1 | 2 | 3 | 4 | 5;
+  rating: 1 | 2 | 3 | 4 | 5;
   comment: string;
 };
+interface IAddCommentProps {
+  id: string | undefined;
+}
 
-const AddComment = () => {
+const AddComment: React.FC<IAddCommentProps> = ({ id }) => {
   const { register, handleSubmit, reset } = useForm<FormData>();
-  const addComment = useComments((state) => state.addComment);
+  const { mutate } = useMutation({
+    mutationKey: ["create-review"],
+    mutationFn: (data: FormData) =>
+      apiClient.post(`/products/${id}/reviews`, data),
+  });
 
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        addComment({
-          id: Date.now(),
-          rate: data.rate,
-          title: data.comment,
-          date: new Date(),
-          author: "محمد فلاح",
-        });
-
+        mutate(data);
         reset();
       })}
     >
@@ -30,7 +31,7 @@ const AddComment = () => {
           <span className="label-text">امتیاز</span>
         </div>
         <select
-          {...register("rate", { valueAsNumber: true, required: true })}
+          {...register("rating", { valueAsNumber: true, required: true })}
           className="select select-bordered"
         >
           <option value={1}>1</option>

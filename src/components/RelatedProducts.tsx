@@ -1,13 +1,13 @@
 import ProductCard from "../components/ProductCard";
-import useProducts from "../stores/products-store";
+import useProducts from "../hooks/useProducts";
 
 const RelatedProducts = () => {
-  const products = useProducts((state) => state.products);
+  const { data: products } = useProducts();
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {products?.map((product) => (
+        <ProductCard key={product._id} product={product} />
       ))}
     </div>
   );

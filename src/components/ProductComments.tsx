@@ -1,31 +1,29 @@
 import ProductStars from "../components/ProductStars";
-import useComments from "../stores/comment-store";
-import Warning from "./Warning";
+import useSingleProduct from "../hooks/useSingleProduct";
+import { getDate } from "../utils/get-date";
 
-const ProductComments = () => {
-  const comments = useComments((state) => state.comments);
+interface IProductCommentsProps {
+  id: string | undefined;
+}
 
-  return comments.length > 0 ? (
+const ProductComments: React.FC<IProductCommentsProps> = ({ id }) => {
+  const { data: product } = useSingleProduct(id!);
+
+  return (
     <div>
-      {comments.map((comment) => (
+      {product?.reviews.map((comment) => (
         <div
           className="bg-base-200 rounded-md my-5 p-4 flex justify-between gap-4"
-          key={comment.id}
+          key={comment._id}
         >
           <div className="flex flex-col gap-3">
-            <span className="text-sm">{comment.author}</span>
-            <p>{comment.title}</p>
-            <ProductStars rate={comment.rate} />
+            <span className="text-sm">{comment.user}</span>
+            <p>{comment.name}</p>
+            <ProductStars rate={comment.rating} />
           </div>
-          <span className="text-sm">
-            {comment.date.getHours()}:{comment.date.getMinutes()}
-          </span>
+          <span className="text-sm">{getDate(comment.createdAt)}</span>
         </div>
       ))}
-    </div>
-  ) : (
-    <div>
-      <Warning isSmall={true} title={"هیچ نظری برای این محصول وجود ندارد"} />
     </div>
   );
 };

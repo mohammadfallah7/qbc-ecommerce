@@ -12,7 +12,7 @@ const ProductCard = ({ product }: Props) => {
   // const likeProduct = useProducts((state) => state.likeProduct);
 
   return (
-    <Link to={`/products/${product._id}`}>
+    <Link to={`/products/${product._id}?content=add-comment`}>
       <div className="flex flex-col gap-3">
         <div className="bg-base-300 w-full rounded-lg overflow-hidden h-36 relative">
           {/* {product.isFavorite ? (
@@ -28,12 +28,11 @@ const ProductCard = ({ product }: Props) => {
           )} */}
           <img src={product.image} alt={product.name} />
         </div>
-        <Link to={`/products/${product._id}?content=add-comment`}>
-          <div className="flex justify-between items-center">
-            <p className="text-sm ">{product.name}</p>
-            <PriceBadge price={product.price} />
-          </div>
-        </Link>
+
+        <div className="flex justify-between items-center">
+          <p className="text-sm ">{product.name}</p>
+          <PriceBadge price={product.price} />
+        </div>
       </div>
     </Link>
   );

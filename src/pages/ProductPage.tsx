@@ -8,7 +8,8 @@ import ProductComments from "../components/ProductComments";
 import RelatedProducts from "../components/RelatedProducts";
 import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
-import useSingleProduct from "../hooks/useSingleProduct";
+
+import useProducts from "../hooks/useProducts";
 
 const ProductPage = () => {
   // const { likeProduct } = useProducts();
@@ -17,7 +18,8 @@ const ProductPage = () => {
   const location = useLocation();
   const [content, setContent] = useState("comments");
   const [inCart, setInCart] = useState(false);
-  const { data: product, isLoading } = useSingleProduct(id!);
+  const { data: products, isLoading } = useProducts();
+  const product = products?.find((product) => product._id === id);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const content = queryParams.get("content")!;
@@ -29,7 +31,13 @@ const ProductPage = () => {
 
   return (
     <div className="grid grid-cols-4 grid-rows-subgrid gap-14">
-      <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg h-96"></div>
+      <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg overflow-hidden h-96">
+        <img
+          className="object-cover w-full h-full"
+          src={product?.image}
+          alt={product?.name}
+        />
+      </div>
       <div className="col-span-4 md:col-span-2 flex flex-col justify-between items-start gap-7 relative">
         {/* {product?.isFavorite ? (
           <BsHeartFill
@@ -98,8 +106,8 @@ const ProductPage = () => {
         </Link>
       </div>
       <div className="col-span-4 md:col-span-3">
-        {content === "add-comment" && <AddComment />}
-        {content === "comments" && <ProductComments />}
+        {content === "add-comment" && <AddComment id={product?._id} />}
+        {content === "comments" && <ProductComments id={product?._id} />}
         {content === "related-products" && <RelatedProducts />}
       </div>
     </div>
