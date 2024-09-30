@@ -12,7 +12,11 @@ interface Props {
 const ProductFeatureList = ({ product }: Props) => {
   return (
     <div className="grid grid-cols-2 grid-rows-3 gap-x-14 gap-y-7">
-      <ProductFeature icon={<FaStar />} name="امتیاز" value={product.rating} />
+      <ProductFeature
+        icon={<FaStar />}
+        name="امتیاز"
+        value={product.rating.toFixed(1)}
+      />
       <ProductFeature
         icon={<FaShop />}
         name="برند"
