@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 import TextArea from "./TextArea";
-import { useMutation } from "@tanstack/react-query";
-import apiClient from "../api/api-client";
+import useCreateReview from "../hooks/useCreateReview";
 
-type FormData = {
+export type AddCommentFormData = {
   rating: 1 | 2 | 3 | 4 | 5;
   comment: string;
 };
@@ -12,12 +11,8 @@ interface IAddCommentProps {
 }
 
 const AddComment: React.FC<IAddCommentProps> = ({ id }) => {
-  const { register, handleSubmit, reset } = useForm<FormData>();
-  const { mutate } = useMutation({
-    mutationKey: ["create-review"],
-    mutationFn: (data: FormData) =>
-      apiClient.post(`/products/${id}/reviews`, data),
-  });
+  const { register, handleSubmit, reset } = useForm<AddCommentFormData>();
+  const { mutate } = useCreateReview(id!);
 
   return (
     <form
