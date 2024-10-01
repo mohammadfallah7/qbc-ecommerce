@@ -2,7 +2,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import ProductFeatureList from "../components/ProductFeatureList";
 // import { BsHeart, BsHeartFill } from "react-icons/bs";
 import useCart from "../stores/cart-store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddComment from "../components/AddComment";
 import ProductComments from "../components/ProductComments";
 import RelatedProducts from "../components/RelatedProducts";
@@ -19,6 +19,7 @@ const ProductPage = () => {
   const [content, setContent] = useState("comments");
   const { data: products, isLoading } = useProducts();
   const product = products?.find((product) => product._id === id);
+  const qtyRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const content = queryParams.get("content")!;
@@ -57,7 +58,10 @@ const ProductPage = () => {
         <ProductFeatureList product={product!} />
         <div className="flex items-center gap-14">
           <ProductStars rate={product?.rating || 1} />
-          <select className="select select-bordered select-xs w-full max-w-xs">
+          <select
+            ref={qtyRef}
+            className="select select-bordered select-xs w-full max-w-xs"
+          >
             {[1, 2, 3, 4, 5].map((number) => (
               <option key={number}>{number}</option>
             ))}
@@ -70,7 +74,7 @@ const ProductPage = () => {
             addProduct(product!, {
               _id: product?._id,
               name: product?.name,
-              qty: product?.quantity,
+              qty: parseInt(qtyRef.current?.value || "1"),
             });
           }}
         >

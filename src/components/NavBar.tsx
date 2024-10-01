@@ -23,7 +23,9 @@ import apiClient from "../api/api-client";
 const NavBar = () => {
   const { navItem, changeNavItem } = useNavItem();
   const { theme, changeTheme } = useTheme();
-  const cartProductsLength = useCart((state) => state.cartProducts.length);
+  const cartProductsLength = useCart((state) =>
+    state.orderItems.reduce((acc, current) => (acc += current.qty!), 0)
+  );
   const { logout, id, isAdmin } = useUser();
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const { mutate } = useMutation({

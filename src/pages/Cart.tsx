@@ -7,7 +7,7 @@ import Warning from "../components/Warning";
 
 const Cart = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const cartProducts = useCart((state) => state.cartProducts);
+  const { cartProducts, orderItems } = useCart();
 
   useEffect(() => {
     changeNavItem("cart");
@@ -21,7 +21,10 @@ const Cart = () => {
         ))}
       </div>
       <div className="flex flex-col gap-3">
-        <span>تعداد ({cartProducts.length})</span>
+        <span>
+          تعداد ({orderItems.reduce((acc, current) => (acc += current.qty!), 0)}
+          )
+        </span>
         <span className="font-bold">
           {cartProducts
             .reduce((accumulator, current) => (accumulator += current.price), 0)

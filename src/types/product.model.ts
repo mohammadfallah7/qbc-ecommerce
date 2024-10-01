@@ -15,4 +15,5 @@ export type ProductModel = {
   reviews: ReviewModel[];
   createdAt: string;
   updatedAt: string;
+  isFavorite: boolean;
 };

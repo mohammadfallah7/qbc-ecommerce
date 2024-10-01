@@ -10,6 +10,7 @@ interface CartStore {
   addProduct: (product: ProductModel, orderItem: OrderItemPayload) => void;
   deleteProduct: (id: string) => void;
   addShippingInfo: (information: ShippingEntity) => void;
+  clearCart: () => void;
   // OrderedProduct: ProductEntity[];
   // addToOrdered: () => void;
 }
@@ -29,8 +30,10 @@ const useCart = create<CartStore>((set) => ({
       cartProducts: state.cartProducts.filter(
         (cartProduct) => cartProduct._id !== id
       ),
+      orderItems: state.orderItems.filter((orderItem) => orderItem._id !== id),
     })),
   addShippingInfo: (information) => set(() => ({ shippingInfo: information })),
+  clearCart: () => set(() => ({ cartProducts: [], orderItems: [] })),
   // addToOrdered: () =>
   //   set((state) => ({
   //     OrderedProduct: [...state.OrderedProduct, ...state.cartProducts],
