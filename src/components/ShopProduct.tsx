@@ -2,12 +2,15 @@ import { LuShoppingCart } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { IoCaretBack } from "react-icons/io5";
 import { ProductModel } from "../types/product.model";
+import useCart from "../stores/cart-store";
 
 interface Props {
   product: ProductModel;
 }
 
 const ShopProduct = ({ product }: Props) => {
+  const addProduct = useCart((state) => state.addProduct);
+
   return (
     <div className="card card-compact bg-base-100 shadow">
       <figure className="bg-base-300 w-full h-40 relative">
@@ -34,7 +37,13 @@ const ShopProduct = ({ product }: Props) => {
           <LuShoppingCart
             className="cursor-pointer"
             size={20}
-            onClick={() => console.log("add products to cart")}
+            onClick={() =>
+              addProduct(product, {
+                _id: product?._id,
+                name: product?.name,
+                qty: product?.quantity,
+              })
+            }
           />
         </div>
       </div>

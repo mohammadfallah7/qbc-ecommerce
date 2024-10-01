@@ -4,21 +4,23 @@ import Input from "../components/Input";
 import Radio from "../components/Radio";
 import useCart from "../stores/cart-store";
 import CartProductsTable from "../components/CartProductsTable";
-import { Link } from "react-router-dom";
 import { shippingPrice } from "../utils/constants";
 import { finalPrice, taxPrice } from "../utils/calculate-price";
 import { useNavigate } from "react-router-dom";
 import { IoCaretBack } from "react-icons/io5";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
 
 type ShoppingProgressFormData = {
   address: string;
   city: string;
   country: string;
-  zipCode: number;
+  postalCode: number;
   paymentMethod: "درگاه پرداخت پاسارگاد";
 };
 
 const ShoppingProgress = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState<number>(2);
   const {
     register,
@@ -26,8 +28,23 @@ const ShoppingProgress = () => {
     reset,
     formState: { errors },
   } = useForm<ShoppingProgressFormData>();
-  const { shippingInfo, addShippingInfo, cartProducts, addToOrdered } =
-    useCart();
+  const { shippingInfo, addShippingInfo, cartProducts, orderItems } = useCart();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["create-order"],
+    mutationFn: () =>
+      apiClient.post("/orders", {
+        orderItems,
+        paymentMethod: shippingInfo?.paymentMethod,
+        shippingAddress: {
+          address: shippingInfo?.address,
+          city: shippingInfo?.city,
+          postalCode: shippingInfo?.postalCode,
+        },
+      }),
+    onSuccess: () => {
+      navigate("/checkout");
+    },
+  });
 
   useEffect(() => {
     if (shippingInfo) setStep((state) => (state < 3 ? state + 1 : state));
@@ -38,15 +55,14 @@ const ShoppingProgress = () => {
     reset();
   };
 
+  const handleCreateOrder = () => {
+    mutate();
+  };
+
   const productsPrice = cartProducts.reduce(
     (acc, current) => (acc += current.price),
     0
   );
-  const navigate = useNavigate();
-  const handlePlaceOrder = () => {
-    addToOrdered();
-    navigate("/order");
-  };
 
   return (
     <div>
@@ -88,11 +104,11 @@ const ShoppingProgress = () => {
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
           <Input
-            error={errors.zipCode}
+            error={errors.postalCode}
             label="کد پستی"
             type="number"
             placeholder="9441835549"
-            useFormRegister={register("zipCode", {
+            useFormRegister={register("postalCode", {
               valueAsNumber: true,
               required: true,
             })}
@@ -133,7 +149,7 @@ const ShoppingProgress = () => {
               <h3 className="text-lg">آدرس دریافت</h3>
               <span className="text-xs">
                 {shippingInfo?.city} - {shippingInfo?.address} -{" "}
-                {shippingInfo?.zipCode}
+                {shippingInfo?.postalCode}
               </span>
             </div>
             <div className="flex flex-col text-xs gap-3">
@@ -155,13 +171,15 @@ const ShoppingProgress = () => {
               </div>
             </div>
           </div>
-          <Link
-            to={"/checkout"}
-            onClick={handlePlaceOrder}
+          <button
             className="btn btn-secondary rounded-full"
+            onClick={handleCreateOrder}
           >
             ثبت سفارش
-          </Link>
+            {isPending && (
+              <span className="loading loading-ring loading-xs"></span>
+            )}
+          </button>
         </div>
       )}
     </div>

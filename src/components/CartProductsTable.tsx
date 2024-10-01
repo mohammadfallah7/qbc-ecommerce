@@ -1,7 +1,7 @@
-import { ProductEntity } from "../types/product-entity";
+import { ProductModel } from "../types/product.model";
 
 interface Props {
-  products: ProductEntity[];
+  products: ProductModel[];
 }
 
 const CartProductsTable = ({ products }: Props) => {
@@ -18,12 +18,12 @@ const CartProductsTable = ({ products }: Props) => {
       </thead>
       <tbody>
         {products.map((cartProduct) => (
-          <tr key={cartProduct.id}>
+          <tr key={cartProduct._id}>
             <th>
               <div className="bg-base-300 w-16 h-16 rounded-md"></div>
             </th>
-            <td>{cartProduct.title}</td>
-            <td>{cartProduct.count}</td>
+            <td>{cartProduct.name}</td>
+            <td>{cartProduct.quantity}</td>
             <td>{cartProduct.price.toLocaleString()}</td>
             <td>{cartProduct.price.toLocaleString()}</td>
           </tr>

@@ -3,6 +3,6 @@ export type ShippingEntity = {
   address: string;
   city: string;
   country: string;
-  zipCode: number;
+  postalCode: number;
   paymentMethod: "درگاه پرداخت پاسارگاد";
 };

@@ -1,7 +1,7 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import ProductFeatureList from "../components/ProductFeatureList";
 // import { BsHeart, BsHeartFill } from "react-icons/bs";
-// import useCart from "../stores/cart-store";
+import useCart from "../stores/cart-store";
 import { useEffect, useState } from "react";
 import AddComment from "../components/AddComment";
 import ProductComments from "../components/ProductComments";
@@ -13,11 +13,10 @@ import useProducts from "../hooks/useProducts";
 
 const ProductPage = () => {
   // const { likeProduct } = useProducts();
-  // const addProduct = useCart((state) => state.addProduct);
+  const addProduct = useCart((state) => state.addProduct);
   const { id } = useParams();
   const location = useLocation();
   const [content, setContent] = useState("comments");
-  const [inCart, setInCart] = useState(false);
   const { data: products, isLoading } = useProducts();
   const product = products?.find((product) => product._id === id);
   useEffect(() => {
@@ -64,26 +63,19 @@ const ProductPage = () => {
             ))}
           </select>
         </div>
-        {!inCart ? (
-          <button
-            className="btn btn-secondary text-xs btn-sm"
-            onClick={() => {
-              // addProduct(product!);
-              setInCart(true);
-            }}
-          >
-            افزودن به سبد خرید
-          </button>
-        ) : (
-          <div className="flex items-center gap-2">
-            <label className="mr-2">تعداد:</label>
-            <select className="select select-bordered select-xs w-full max-w-xs">
-              {[1, 2, 3, 4, 5].map((number) => (
-                <option key={number}>{number}</option>
-              ))}
-            </select>
-          </div>
-        )}
+
+        <button
+          className="btn btn-secondary text-xs btn-sm"
+          onClick={() => {
+            addProduct(product!, {
+              _id: product?._id,
+              name: product?.name,
+              qty: product?.quantity,
+            });
+          }}
+        >
+          افزودن به سبد خرید
+        </button>
       </div>
       <div className="col-span-4 md:col-span-1 flex flex-col gap-7">
         <Link
