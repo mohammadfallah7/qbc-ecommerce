@@ -1,11 +1,13 @@
 import CartProductsTable from "../components/CartProductsTable";
 import useUser from "../hooks/useUser";
 import useOrders from "../hooks/useOrders";
+import useCart from "../stores/cart-store";
 
 const Checkout = () => {
   const { data: orders } = useOrders();
   const { data: user } = useUser();
   const order = orders && orders.length > 0 ? orders[orders.length - 1] : null;
+  const clearCart = useCart((state) => state.clearCart);
 
   return (
     <div className="grid grid-cols-2 gap-14">
@@ -60,7 +62,12 @@ const Checkout = () => {
             <span>{order?.totalPrice.toLocaleString()} تومان</span>
           </div>
         </div>
-        <button className="btn btn-secondary rounded-full">پرداخت</button>
+        <button
+          className="btn btn-secondary rounded-full"
+          onClick={() => clearCart()}
+        >
+          پرداخت
+        </button>
       </div>
     </div>
   );

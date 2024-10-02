@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import ProductFeatureList from "../components/ProductFeatureList";
-// import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import useCart from "../stores/cart-store";
 import { useEffect, useRef, useState } from "react";
 import AddComment from "../components/AddComment";
@@ -8,11 +8,11 @@ import ProductComments from "../components/ProductComments";
 import RelatedProducts from "../components/RelatedProducts";
 import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
-
 import useProducts from "../hooks/useProducts";
+import useFavoriteProducts from "../stores/favoriteProduct-store";
 
 const ProductPage = () => {
-  // const { likeProduct } = useProducts();
+  const { likeProduct, disLikeProduct } = useFavoriteProducts();
   const addProduct = useCart((state) => state.addProduct);
   const { id } = useParams();
   const location = useLocation();
@@ -39,17 +39,17 @@ const ProductPage = () => {
         />
       </div>
       <div className="col-span-4 md:col-span-2 flex flex-col justify-between items-start gap-7 relative">
-        {/* {product?.isFavorite ? (
+        {product?.isFavorite ? (
           <BsHeartFill
             className="absolute top-2 left-2 z-10 cursor-pointer text-secondary"
-            onClick={() => likeProduct(product?.id || 0)}
+            onClick={() => disLikeProduct(product?._id)}
           />
         ) : (
           <BsHeart
             className="absolute top-2 left-2 z-10 cursor-pointer"
-            onClick={() => likeProduct(product?.id || 0)}
+            onClick={() => likeProduct(product!)}
           />
-        )} */}
+        )}
         <p>{product?.name}</p>
         <p>{product?.description}</p>
         <span className="text-2xl">

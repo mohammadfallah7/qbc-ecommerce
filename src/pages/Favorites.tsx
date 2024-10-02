@@ -10,7 +10,7 @@ const Favorites = () => {
 
   useEffect(() => {
     changeNavItem("favorites");
-  });
+  }, [changeNavItem]);
 
   return products.length > 0 ? (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">

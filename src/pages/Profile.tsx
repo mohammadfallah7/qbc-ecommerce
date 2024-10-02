@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import Input from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useUser from "../hooks/useUser";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import apiClient from "../api/api-client";
+import Loading from "../components/Loading";
+import useUpdateUser from "../hooks/useUpdateUser";
 
-type ProfileFormData = {
+export type ProfileFormData = {
   username: string;
   email: string;
   password: string;
@@ -19,23 +19,16 @@ const Profile = () => {
     formState: { errors },
     reset,
   } = useForm<ProfileFormData>();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  const { data: user } = useUser();
-  const { mutate } = useMutation({
-    mutationKey: ["update-user-profile"],
-    mutationFn: (data: ProfileFormData) =>
-      apiClient.put("/users/profile", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      navigate("/");
-    },
-  });
+  const { data: user, isLoading } = useUser();
+  const { mutate } = useUpdateUser();
   const onSubmit = (data: ProfileFormData) => {
     mutate(data);
     reset();
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-2/3">
