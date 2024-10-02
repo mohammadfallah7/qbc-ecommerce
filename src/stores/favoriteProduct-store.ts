@@ -11,7 +11,9 @@ const useFavoriteProducts = create<FavoriteProductsStore>((set) => ({
   products: [],
   likeProduct: (product) =>
     set((state) => ({
-      products: [...state.products, product],
+      products: [...state.products, product].map((p) =>
+        p._id === product._id ? { ...p, isFavorite: true } : p
+      ),
     })),
   disLikeProduct: (id) =>
     set((state) => ({

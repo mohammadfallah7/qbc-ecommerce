@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PriceBadge from "./PriceBadge";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeartFill } from "react-icons/bs";
 import { ProductModel } from "../types/product.model";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
 
@@ -17,12 +17,12 @@ const ProductCard = ({ product }: Props) => {
         {product.isFavorite ? (
           <BsHeartFill
             className="absolute top-2 right-2 z-10 cursor-pointer text-secondary"
-            onClick={() => likeProduct(product)}
+            onClick={() => disLikeProduct(product._id)}
           />
         ) : (
-          <BsHeart
-            className="absolute top-2 right-2 z-10 cursor-pointer"
-            onClick={() => disLikeProduct(product._id)}
+          <BsHeartFill
+            className="absolute top-2 right-2 z-10 cursor-pointer text-secondary"
+            onClick={() => likeProduct(product)}
           />
         )}
         <img src={product.image} alt={product.name} />
