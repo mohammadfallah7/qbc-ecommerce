@@ -118,8 +118,8 @@ const ShoppingProgress = () => {
             <div className="flex flex-col gap-3">
               <h3 className="text-lg">آدرس دریافت</h3>
               <span className="text-xs">
-                {order?.shippingAddress.city} - {order?.shippingAddress.address}
-                {order?.shippingAddress.postalCode}
+                {order?.shippingAddress.city} - {order?.shippingAddress.address}{" "}
+                - {order?.shippingAddress.postalCode}
               </span>
             </div>
             <div className="flex flex-col text-xs gap-3">

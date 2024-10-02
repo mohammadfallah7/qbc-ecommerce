@@ -1,20 +1,14 @@
 import { create } from "zustand";
-import { UserEntity } from "../types/user-entity";
 
 interface UserStore {
-  user: UserEntity | undefined;
-  users: UserEntity[];
   id: string | undefined;
   isAdmin: boolean | undefined;
   login: (id: string, isAdmin: boolean) => void;
   logout: () => void;
-  deleteUser: (id: number) => void;
   initializeAuth: () => void;
 }
 
 const useUser = create<UserStore>((set) => ({
-  user: undefined,
-  users: [],
   id: undefined,
   isAdmin: undefined,
   login: (id, isAdmin) => {
@@ -22,8 +16,6 @@ const useUser = create<UserStore>((set) => ({
     localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
     set(() => ({ id, isAdmin }));
   },
-  deleteUser: (id) =>
-    set((state) => ({ users: state.users.filter((user) => user.id !== id) })),
   logout: () => {
     localStorage.removeItem("id");
     localStorage.removeItem("isAdmin");
