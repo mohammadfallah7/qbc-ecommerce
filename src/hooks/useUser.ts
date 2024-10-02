@@ -4,7 +4,7 @@ import { UserModel } from "../types/user.model";
 
 const useUser = () => {
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ["user"],
     queryFn: () =>
       apiClient.get<UserModel>("/users/profile").then((res) => res.data),
   });
