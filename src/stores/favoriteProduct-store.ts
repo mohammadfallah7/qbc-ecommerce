@@ -10,11 +10,19 @@ interface FavoriteProductsStore {
 const useFavoriteProducts = create<FavoriteProductsStore>((set) => ({
   products: [],
   likeProduct: (product) =>
-    set((state) => ({
-      products: [...state.products, product].map((p) =>
-        p._id === product._id ? { ...p, isFavorite: true } : p
-      ),
-    })),
+    set((state) => {
+      const isAlreadyFavorite = state.products.some(
+        (p) => p._id === product._id
+      );
+
+      if (isAlreadyFavorite) {
+        return state;
+      }
+
+      return {
+        products: [...state.products, { ...product, isFavorite: true }],
+      };
+    }),
   disLikeProduct: (id) =>
     set((state) => ({
       products: state.products.filter((product) => product._id !== id),

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PriceBadge from "./PriceBadge";
-import { BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { ProductModel } from "../types/product.model";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
 
@@ -20,7 +20,7 @@ const ProductCard = ({ product }: Props) => {
             onClick={() => disLikeProduct(product._id)}
           />
         ) : (
-          <BsHeartFill
+          <BsHeart
             className="absolute top-2 right-2 z-10 cursor-pointer text-secondary"
             onClick={() => likeProduct(product)}
           />
