@@ -63,7 +63,7 @@ const Profile = () => {
         />
 
         <div className="flex justify-between items-center mt-5">
-          <Link to={"/"} className="btn btn-secondary btn-sm text-xs">
+          <Link to={"/order"} className="btn btn-secondary btn-sm text-xs">
             سفارشات من
           </Link>
           <button type="submit" className="btn btn-secondary btn-sm text-xs">

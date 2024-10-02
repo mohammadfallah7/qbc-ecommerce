@@ -1,14 +1,13 @@
 import CartProductsTable from "../components/CartProductsTable";
 import useUser from "../hooks/useUser";
-import useOrders from "../hooks/useOrders";
-import useCart from "../stores/cart-store";
-import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import useOrder from "../hooks/useOrder";
 
-const Checkout = () => {
-  const { data: orders } = useOrders();
+const Details = () => {
   const { data: user } = useUser();
-  const order = orders && orders.length > 0 ? orders[orders.length - 1] : null;
-  const clearCart = useCart((state) => state.clearCart);
+  const { data: order, isLoading } = useOrder();
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="grid grid-cols-2 gap-14">
@@ -63,16 +62,9 @@ const Checkout = () => {
             <span>{order?.totalPrice.toLocaleString()} تومان</span>
           </div>
         </div>
-        <Link
-          to={"/order"}
-          className="btn btn-secondary rounded-full"
-          onClick={() => clearCart()}
-        >
-          پرداخت
-        </Link>
       </div>
     </div>
   );
 };
 
-export default Checkout;
+export default Details;

@@ -1,27 +1,19 @@
-import useCart from "../stores/cart-store";
-import useUser from "../stores/user-store";
-import { showStatus } from "../utils/status";
+import { Link } from "react-router-dom";
+import StatusBadge from "../components/StatusBadge";
+import useOrders from "../hooks/useOrders";
+import { getDate } from "../utils/get-date";
 
 const Order = () => {
-  const { OrderedProduct } = useCart();
-  const { user } = useUser();
+  const { data: orders } = useOrders();
 
-  const getPaymentStatus = (ispaid: boolean) => {
-    return ispaid
-      ? { text: "پرداخت شده", className: "badge badge-success text-white" }
-      : { text: "پرداخت نشده", className: "badge badge-error text-white" };
-  };
-
-  return (
-    <div className="overflow-x-auto">
+  return orders?.map((order) => (
+    <div key={order._id} className="overflow-x-auto">
       <table className="table mt-14">
-        {/* head */}
         <thead>
           <tr>
             <th>عکس</th>
             <th>نام محصول</th>
             <th>تاریخ</th>
-            <th>کاربر</th>
             <th>قیمت نهایی</th>
             <th>پرداخت</th>
             <th>ارسال</th>
@@ -29,51 +21,42 @@ const Order = () => {
           </tr>
         </thead>
         <tbody>
-          {OrderedProduct.length > 0 ? (
-            OrderedProduct.map((product) => {
-              const paymentStatus = getPaymentStatus(product.ispaid!);
-              const shippingStatus = showStatus(product.shippingStatus!);
-
-              return (
-                <tr key={product.id}>
-                  <th>
-                    <div className="w-12 h-12 bg-slate-400"></div>
-                  </th>
-                  <td>{product.title}</td>
-                  <td>{new Date().toLocaleDateString()}</td>
-                  <td>{user?.name}</td>
-                  <td>{product.price.toLocaleString()} تومان</td>
-
-                  <td>
-                    <div className={paymentStatus.className}>
-                      {paymentStatus.text}
-                    </div>
-                  </td>
-
-                  <td>
-                    <div className={shippingStatus.className}>
-                      {shippingStatus.text}
-                    </div>
-                  </td>
-                  <td>
-                    <button className="btn btn-sm btn-secondary ">
-                      جزییات
-                    </button>
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <tr>
-              <td colSpan={8} className="text-center">
-                هیچ سفارشی ثبت نشده است.
+          {order.orderItems.map((orderItem) => (
+            <tr key={orderItem._id}>
+              <td>
+                <div className="w-12 h-12 bg-base-300"></div>
+              </td>
+              <td>{orderItem.name}</td>
+              <td>{getDate(order.createdAt)}</td>
+              <td>{orderItem.price}</td>
+              <td>
+                {order.isPaid ? (
+                  <StatusBadge color="success">پرداخت شده</StatusBadge>
+                ) : (
+                  <StatusBadge color="error">پرداخت نشده</StatusBadge>
+                )}
+              </td>
+              <td>
+                {order.isDelivered ? (
+                  <StatusBadge color="success">ارسال شده</StatusBadge>
+                ) : (
+                  <StatusBadge color="error">ارسال نشده</StatusBadge>
+                )}
+              </td>
+              <td>
+                <Link
+                  to={`/details/${order._id}`}
+                  className="btn btn-sm btn-secondary"
+                >
+                  جزییات
+                </Link>
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
-  );
+  ));
 };
 
 export default Order;

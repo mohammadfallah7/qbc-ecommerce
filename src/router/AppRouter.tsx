@@ -8,6 +8,7 @@ import User from "../pages/User";
 import CreateProduct from "../pages/CreateProduct";
 import Order from "../pages/Order";
 import Dashboard from "../pages/Dashboard";
+import Details from "../pages/Details";
 
 const router: RouteObject[] = [
   {
@@ -63,6 +64,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout>
         <Order />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/details/:id",
+    element: (
+      <PageLayout>
+        <Details />
       </PageLayout>
     ),
   },
