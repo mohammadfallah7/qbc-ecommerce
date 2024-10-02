@@ -1,22 +1,16 @@
 import CartProductsTable from "../components/CartProductsTable";
-import useCart from "../stores/cart-store";
-import useUser from "../stores/user-store";
-import { finalPrice, taxPrice } from "../utils/calculate-price";
-import { shippingPrice } from "../utils/constants";
+import useUser from "../hooks/useUser";
+import useOrders from "../hooks/useOrders";
 
 const Checkout = () => {
-  const { cartProducts, shippingInfo } = useCart();
-  const user = useUser((state) => state.user);
-
-  const productsPrice = cartProducts.reduce(
-    (acc, current) => (acc += current.price),
-    0
-  );
+  const { data: orders } = useOrders();
+  const { data: user } = useUser();
+  const order = orders && orders.length > 0 ? orders[orders.length - 1] : null;
 
   return (
     <div className="grid grid-cols-2 gap-14">
       <div className="col-span-2 md:col-span-1 overflow-x-auto">
-        <CartProductsTable products={cartProducts} />
+        <CartProductsTable products={order?.orderItems} />
       </div>
 
       <div className="col-span-2 md:col-span-1 flex flex-col gap-8 text-sm">
@@ -24,11 +18,11 @@ const Checkout = () => {
           <h2 className="text-lg">آدرس دریافت</h2>
           <div className="flex items-center gap-2 mt-5">
             <span className="text-secondary">شماره سفارش:</span>
-            <span>{shippingInfo?.id}</span>
+            <span>{order?._id}</span>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">نام:</span>
-            <span>{user?.name}</span>
+            <span>{user?.username}</span>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">ایمیل:</span>
@@ -37,13 +31,13 @@ const Checkout = () => {
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">آدرس:</span>
             <span>
-              {shippingInfo?.city} - {shippingInfo?.address} -{" "}
-              {shippingInfo?.zipCode}
+              {order?.shippingAddress.city} - {order?.shippingAddress.address}
+              {order?.shippingAddress.postalCode}
             </span>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">روش پرداخت:</span>
-            <span>{shippingInfo?.paymentMethod}</span>
+            <span>درگاه پرداخت پاسارگاد</span>
           </div>
         </div>
 
@@ -51,19 +45,19 @@ const Checkout = () => {
           <h2 className="text-lg mb-5">خلاصه خرید</h2>
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-secondary">قیمت محصولات:</span>
-            <span>{productsPrice.toLocaleString()} تومان</span>
+            <span>{order?.itemsPrice.toLocaleString()} تومان</span>
           </div>
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-secondary">هزینه ارسال:</span>
-            <span>{shippingPrice.toLocaleString()} تومان</span>
+            <span>{order?.shippingPrice.toLocaleString()} تومان</span>
           </div>
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-secondary">مالیات:</span>
-            <span>{taxPrice(productsPrice).toLocaleString()} تومان</span>
+            <span>{order?.taxPrice.toLocaleString()} تومان</span>
           </div>
           <div className="flex items-center justify-between gap-2">
             <span className="text-secondary">مبلغ نهایی:</span>
-            <span>{finalPrice(productsPrice).toLocaleString()} تومان</span>
+            <span>{order?.totalPrice.toLocaleString()} تومان</span>
           </div>
         </div>
         <button className="btn btn-secondary rounded-full">پرداخت</button>

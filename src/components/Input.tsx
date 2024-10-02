@@ -10,6 +10,7 @@ interface Props {
   error?: FieldError;
   isHidden?: boolean;
   className?: string;
+  defaultValue?: string;
 }
 
 const Input = ({
@@ -21,6 +22,7 @@ const Input = ({
   error,
   isHidden = false,
   className = "",
+  defaultValue,
 }: Props) => {
   return (
     <label className={`form-control w-full mb-3 ${className}`}>
@@ -32,6 +34,7 @@ const Input = ({
         hidden={isHidden}
         type={type}
         value={value}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         className={`input input-bordered text-sm ${error && "input-error"}`}
       />

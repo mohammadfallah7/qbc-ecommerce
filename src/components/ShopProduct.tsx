@@ -41,7 +41,7 @@ const ShopProduct = ({ product }: Props) => {
               addProduct(product, {
                 _id: product?._id,
                 name: product?.name,
-                qty: product?.quantity,
+                qty: 1,
               })
             }
           />

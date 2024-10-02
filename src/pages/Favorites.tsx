@@ -1,23 +1,23 @@
 import useNavItem from "../stores/nav-item-store";
 import { useEffect } from "react";
-import useProducts from "../stores/products-store";
 import ProductCard from "../components/ProductCard";
 import Warning from "../components/Warning";
+import useFavoriteProducts from "../stores/favoriteProduct-store";
 
 const Favorites = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const products = useProducts((state) => state.products);
+  const products = useFavoriteProducts((state) => state.products);
 
   useEffect(() => {
     changeNavItem("favorites");
   });
 
-  return products.filter((product) => product.isFavorite).length > 0 ? (
+  return products.length > 0 ? (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
       {products
         .filter((product) => product.isFavorite)
         .map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
     </div>
   ) : (
