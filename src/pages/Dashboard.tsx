@@ -8,6 +8,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useUsers from "../hooks/useUsers";
+import useAdminOrders from "../hooks/useAdminOrders";
+import useTotalSales from "../hooks/useTotalSales";
+import useSalesByDate from "../hooks/useSalesByDate";
 
 ChartJS.register(
   CategoryScale,
@@ -19,12 +23,17 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { data: users } = useUsers();
+  const { data: orders } = useAdminOrders();
+  const { data: totalSales } = useTotalSales();
+  const { data: salesByDate } = useSalesByDate();
+
   const data = {
-    labels: ["1", "2", "3", "4"],
+    labels: ["1", "2", "3", "4", "5"],
     datasets: [
       {
         label: "فروش",
-        data: [0, 0, 2, 3],
+        data: salesByDate?.map((order) => order.totalSales),
         backgroundColor: "#ec4899",
       },
     ],
@@ -72,7 +81,7 @@ const Dashboard = () => {
           <div className=" p-4 rounded-lg shadow-md flex items-center justify-between">
             <div>
               <p className="text-sm">سفارشات</p>
-              <h3 className="text-2xl font-bold">100</h3>
+              <h3 className="text-2xl font-bold">{orders?.length}</h3>
             </div>
             <div className="rounded-full w-8 h-8 flex items-center justify-center">
               $
@@ -82,7 +91,9 @@ const Dashboard = () => {
           <div className=" p-4 rounded-lg shadow-md flex items-center justify-between">
             <div>
               <p className="text-sm">مشتری ها</p>
-              <h3 className="text-2xl font-bold">10</h3>
+              <h3 className="text-2xl font-bold">
+                {users?.filter((user) => !user.isAdmin).length}
+              </h3>
             </div>
             <div className="  rounded-full w-8 h-8 flex items-center justify-center">
               $
@@ -92,7 +103,9 @@ const Dashboard = () => {
           <div className=" p-4 rounded-lg shadow-lg flex items-center justify-between">
             <div>
               <p className="text-sm">فروش کل</p>
-              <h3 className="text-2xl font-bold">0 تومان</h3>
+              <h3 className="text-2xl font-bold">
+                {totalSales?.totalSales.toLocaleString()}
+              </h3>
             </div>
             <div className="rounded-full w-8 h-8 flex items-center justify-center">
               $

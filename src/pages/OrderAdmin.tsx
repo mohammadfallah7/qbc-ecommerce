@@ -1,33 +1,17 @@
 import { Link } from "react-router-dom";
 import StatusBadge from "../components/StatusBadge";
 import { getDate } from "../utils/get-date";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import apiClient from "../api/api-client";
-import { OrderModel } from "../types/order.model";
 import Loading from "../components/Loading";
+import useAdminOrders from "../hooks/useAdminOrders";
+import usePaidOrder from "../hooks/usePaidOrder";
+import useDeliveryOrder from "../hooks/useDeliveryOrder";
 
 const OrderAdmin = () => {
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ["admin-orders"],
-    queryFn: () =>
-      apiClient.get<OrderModel[]>("/orders").then((res) => res.data),
-  });
-  const queryClient = useQueryClient();
+  const { data: orders, isLoading } = useAdminOrders();
 
-  const { mutate: makePaid } = useMutation({
-    mutationKey: ["make-paid"],
-    mutationFn: (id: string) => apiClient.put(`/orders/${id}/pay`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
-    },
-  });
-  const { mutate: makeDelivery } = useMutation({
-    mutationKey: ["make-delivered"],
-    mutationFn: (id: string) => apiClient.put(`/orders/${id}/deliver`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
-    },
-  });
+  const { mutate: makePaid } = usePaidOrder();
+
+  const { mutate: makeDelivery } = useDeliveryOrder();
 
   if (!orders || orders.length === 0) {
     return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
