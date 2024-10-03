@@ -9,6 +9,7 @@ import CreateProduct from "../pages/CreateProduct";
 import Order from "../pages/Order";
 import Dashboard from "../pages/Dashboard";
 import Details from "../pages/Details";
+import OrderAdmin from "../pages/OrderAdmin";
 
 const router: RouteObject[] = [
   {
@@ -64,6 +65,14 @@ const router: RouteObject[] = [
     element: (
       <PageLayout>
         <Order />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/order-admin",
+    element: (
+      <PageLayout>
+        <OrderAdmin />
       </PageLayout>
     ),
   },
