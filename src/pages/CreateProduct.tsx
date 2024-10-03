@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
+import { CategoryModel } from "../types/category.model";
 
 type CreateProductFormData = {
   name: string;
@@ -15,18 +18,66 @@ type CreateProductFormData = {
 const CreateProduct = () => {
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<CreateProductFormData>();
   const [fileState, setFileState] = useState<string>("");
+
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFileState(URL.createObjectURL(e.target.files[0]));
     }
   };
+
+  const { data: categoryData } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      apiClient
+        .get<CategoryModel[]>("/category/categories")
+        .then((res) => res.data),
+  });
+
+  const { mutate, isPending, isError, isSuccess, error, reset } = useMutation({
+    mutationKey: ["new-product"],
+    mutationFn: (newProduct: CreateProductFormData) => {
+      const formData = new FormData();
+      formData.append("name", newProduct.name);
+      formData.append("price", String(newProduct.price));
+      if (typeof newProduct.category === "string") {
+        formData.append("category", newProduct.category);
+      }
+      formData.append("description", newProduct.description);
+      formData.append("quantity", String(newProduct.quantity));
+      if (newProduct.image && newProduct.image.length > 0) {
+        formData.append("image", newProduct.image[0]);
+      }
+
+      return apiClient.post("/products", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    },
+    onSuccess: () => {
+      reset();
+      setFileState("");
+    },
+  });
+
+  const onSubmit = (data: CreateProductFormData) => {
+    mutate(data);
+  };
   return (
     <div className="w-2/3">
       <h1 className="mb-5">محصول جدید</h1>
-      <form className="grid grid-cols-2 ">
+
+      {isPending && <p>در حال ارسال...</p>}
+      {isSuccess && <p className="text-success">محصول با موفقیت ساخته شد</p>}
+      {isError && (
+        <p className="text-error">خطا در ساخت محصول: {error.message}</p>
+      )}
+
+      <form className="grid grid-cols-2 " onSubmit={handleSubmit(onSubmit)}>
         <img className="hidden" />
         <div className="col-span-2 flex flex-col items-center justify-center border-dashed ">
           {fileState && (
@@ -49,7 +100,12 @@ const CreateProduct = () => {
             type="file"
             id="imageUpload"
             className=""
-            onChange={handleUpload}
+            {...register("image", {
+              required: true,
+              onChange: (e) => {
+                handleUpload(e);
+              },
+            })}
             accept="image/jpg image/png"
             hidden
           />
@@ -77,11 +133,20 @@ const CreateProduct = () => {
             useFormRegister={register("price")}
           />
 
-          <Input
-            label="برند"
-            placeholder="برند محصول را وارد نمایید"
-            useFormRegister={register("category")}
-          />
+          <div className="w-full">
+            <label htmlFor="category">دسته‌بندی</label>
+            <select
+              id="category"
+              className="form-select mt-1 block w-full"
+              {...register("category")}
+            >
+              {categoryData?.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="col-span-2">
           <TextArea label="توضیحات" useFormRegister={register("description")} />
@@ -103,7 +168,7 @@ const CreateProduct = () => {
           type="submit"
           className="btn btn-sm text-xs btn-secondary self-start w-36"
         >
-          ساخت محصول جدید
+          {isPending ? "در حال ارسال..." : "ساخت محصول جدید"}
         </button>
       </form>
     </div>

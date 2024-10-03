@@ -1,11 +1,33 @@
 import { Link } from "react-router-dom";
 import StatusBadge from "../components/StatusBadge";
-import useOrders from "../hooks/useOrders";
 import { getDate } from "../utils/get-date";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import apiClient from "../api/api-client";
+import { OrderModel } from "../types/order.model";
 import Loading from "../components/Loading";
 
-const Order = () => {
-  const { data: orders, isLoading } = useOrders();
+const OrderAdmin = () => {
+  const { data: orders, isLoading } = useQuery({
+    queryKey: ["admin-orders"],
+    queryFn: () =>
+      apiClient.get<OrderModel[]>("/orders").then((res) => res.data),
+  });
+  const queryClient = useQueryClient();
+
+  const { mutate: makePaid } = useMutation({
+    mutationKey: ["make-paid"],
+    mutationFn: (id: string) => apiClient.put(`/orders/${id}/pay`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+    },
+  });
+  const { mutate: makeDelivery } = useMutation({
+    mutationKey: ["make-delivered"],
+    mutationFn: (id: string) => apiClient.put(`/orders/${id}/deliver`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+    },
+  });
 
   if (!orders || orders.length === 0) {
     return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
@@ -52,12 +74,28 @@ const Order = () => {
                 )}
               </td>
               <td>
-                <Link
-                  to={`/details/${order._id}`}
-                  className="btn btn-sm btn-secondary"
-                >
-                  جزییات
-                </Link>
+                <div className="flex gap-5 items-center">
+                  <Link
+                    to={`/details/${order._id}`}
+                    className="btn btn-sm btn-secondary"
+                  >
+                    جزییات
+                  </Link>
+                  <button
+                    className="btn btn-xs btn-secondary"
+                    onClick={() =>
+                      !order.isDelivered && makeDelivery(order?._id)
+                    }
+                  >
+                    ارسال محصول
+                  </button>
+                  <button
+                    className="btn btn-xs btn-secondary"
+                    onClick={() => !order.isPaid && makePaid(order?._id)}
+                  >
+                    پرداخت محصول
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
@@ -67,4 +105,4 @@ const Order = () => {
   ));
 };
 
-export default Order;
+export default OrderAdmin;

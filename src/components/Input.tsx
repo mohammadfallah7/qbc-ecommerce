@@ -11,6 +11,7 @@ interface Props {
   isHidden?: boolean;
   className?: string;
   defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
   isHidden = false,
   className = "",
   defaultValue,
+  onChange,
 }: Props) => {
   return (
     <label className={`form-control w-full mb-3 ${className}`}>
@@ -32,6 +34,7 @@ const Input = ({
       <input
         {...useFormRegister}
         hidden={isHidden}
+        onChange={onChange}
         type={type}
         value={value}
         defaultValue={defaultValue}

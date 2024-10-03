@@ -123,7 +123,7 @@ const NavBar = () => {
               )}
               {isAdmin && (
                 <li className="mb-3">
-                  <Link to={"/order"}>سفارشات</Link>
+                  <Link to={"/order-admin"}>سفارشات</Link>
                 </li>
               )}
               <li className="mb-3">
