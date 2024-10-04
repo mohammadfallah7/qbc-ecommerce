@@ -37,7 +37,7 @@ const CreateProduct = () => {
         .then((res) => res.data),
   });
 
-  const { mutate, isPending, isError, isSuccess, error, reset } = useMutation({
+  const { mutate, isPending, reset } = useMutation({
     mutationKey: ["new-product"],
     mutationFn: (newProduct: CreateProductFormData) => {
       const formData = new FormData();
@@ -60,23 +60,20 @@ const CreateProduct = () => {
     },
     onSuccess: () => {
       reset();
+      setStatus(true);
       setFileState("");
     },
   });
+
+  const [status, setStatus] = useState(false);
 
   const onSubmit = (data: CreateProductFormData) => {
     mutate(data);
   };
   return (
     <div className="w-2/3">
+      {status && <p className="text-success mb-3">محصول با موفقیت اضافه شد</p>}
       <h1 className="mb-5">محصول جدید</h1>
-
-      {isPending && <p>در حال ارسال...</p>}
-      {isSuccess && <p className="text-success">محصول با موفقیت ساخته شد</p>}
-      {isError && (
-        <p className="text-error">خطا در ساخت محصول: {error.message}</p>
-      )}
-
       <form className="grid grid-cols-2 " onSubmit={handleSubmit(onSubmit)}>
         <img className="hidden" />
         <div className="col-span-2 flex flex-col items-center justify-center border-dashed ">

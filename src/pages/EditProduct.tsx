@@ -5,8 +5,9 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "../api/api-client";
 import { CategoryModel } from "../types/category.model";
-import useSingleProduct from "../hooks/useSingleProduct";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../components/Loading";
+import useProducts from "../hooks/useProducts";
 
 type EditProductFormData = {
   name: string;
@@ -32,8 +33,8 @@ const EditProduct = () => {
   };
 
   const { id } = useParams();
-
-  const { data: product } = useSingleProduct(id!);
+  const { data: products, isLoading } = useProducts();
+  const product = products?.find((product) => product._id === id);
 
   const { data: categoryData } = useQuery({
     queryKey: ["categories"],
@@ -43,8 +44,8 @@ const EditProduct = () => {
         .then((res) => res.data),
   });
 
-  const { mutate, isPending, isError, isSuccess, error, reset } = useMutation({
-    mutationKey: ["new-product"],
+  const { mutate, reset } = useMutation({
+    mutationKey: ["update-product"],
     mutationFn: (newProduct: EditProductFormData) => {
       const formData = new FormData();
       formData.append("name", newProduct.name);
@@ -58,7 +59,7 @@ const EditProduct = () => {
         formData.append("image", newProduct.image[0].name);
       }
 
-      return apiClient.post("/products", formData, {
+      return apiClient.put("/products/" + id, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -66,20 +67,54 @@ const EditProduct = () => {
     },
     onSuccess: () => {
       reset();
+      setUpdateStatus(true);
       setFileState("");
     },
   });
 
+  const [updateStatus, setUpdateStatus] = useState(false);
+  const [deleteStatus, setDeleteStatus] = useState(false);
+
   const onSubmit = (data: EditProductFormData) => {
+    console.log("Submit");
     mutate(data);
   };
+
+  const navigate = useNavigate();
+
+  const { mutate: deleteProduct } = useMutation({
+    mutationKey: ["delete-product"],
+    mutationFn: () => apiClient.delete("/products/" + id),
+    onSuccess: () => {
+      setDeleteStatus(true);
+      navigate("/");
+    },
+  });
+
+  function handleDelete(): void {
+    console.log("Delete");
+    deleteProduct();
+  }
+
+  if (isLoading) return <Loading />;
+
   return (
     <div className="w-2/3">
-      {isPending && <p>در حال ارسال...</p>}
-      {isSuccess && <p className="text-success">محصول با موفقیت ساخته شد</p>}
-      {isError && (
-        <p className="text-error">خطا در ساخت محصول: {error.message}</p>
+      {updateStatus && (
+        <p className="text-success mb-2">محصول با موفقیت بروز شد</p>
       )}
+      {deleteStatus && (
+        <p className="text-success mb-2">محصول با موفقیت حذف شد</p>
+      )}
+      <div className="flex items-center justify-between">
+        <h1>ویرایش محصول</h1>
+        <button
+          className="btn w-fit btn-xs text-xs text-white btn-error"
+          onClick={handleDelete}
+        >
+          حذف محصول
+        </button>
+      </div>
 
       <form className="grid grid-cols-2 " onSubmit={handleSubmit(onSubmit)}>
         <img className="hidden" />
@@ -178,14 +213,12 @@ const EditProduct = () => {
             useFormRegister={register("quantity")}
           />
         </div>
-        <div className="flex gap-2">
-          <button className="btn w-fit btn-sm text-white btn-success">
-            بروزرسانی محصول
-          </button>
-          <button className="btn w-fit btn-sm text-white btn-error">
-            حذف محصول
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="btn w-fit btn-sm text-white btn-success"
+        >
+          بروزرسانی محصول
+        </button>
       </form>
     </div>
   );
