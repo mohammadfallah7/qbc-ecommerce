@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
 import useProducts from "../hooks/useProducts";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
+import { FaPlus } from "react-icons/fa6";
 
 const ProductPage = () => {
   const { likeProduct, disLikeProduct } = useFavoriteProducts();
@@ -20,6 +21,7 @@ const ProductPage = () => {
   const { data: products, isLoading } = useProducts();
   const product = products?.find((product) => product._id === id);
   const qtyRef = useRef<HTMLSelectElement>(null);
+  const [inCart, setInCart] = useState(false);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const content = queryParams.get("content")!;
@@ -58,28 +60,46 @@ const ProductPage = () => {
         <ProductFeatureList product={product!} />
         <div className="flex items-center gap-14">
           <ProductStars rate={product?.rating || 1} />
-          <select
-            ref={qtyRef}
-            className="select select-bordered select-xs w-full max-w-xs"
-          >
-            {[1, 2, 3, 4, 5].map((number) => (
-              <option key={number}>{number}</option>
-            ))}
-          </select>
+          <div className="flex items-center gap-2">
+            {inCart && (
+              <FaPlus
+                size={24}
+                className="cursor-pointer"
+                onClick={() => {
+                  addProduct(product!, {
+                    _id: product?._id,
+                    name: product?.name,
+                    qty: parseInt(qtyRef.current?.value || "1"),
+                  });
+                }}
+              />
+            )}
+            <select
+              ref={qtyRef}
+              className="select select-bordered select-xs w-full max-w-xs"
+            >
+              {[1, 2, 3, 4, 5].map((number) => (
+                <option key={number}>{number}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <button
-          className="btn btn-secondary text-xs btn-sm"
-          onClick={() => {
-            addProduct(product!, {
-              _id: product?._id,
-              name: product?.name,
-              qty: parseInt(qtyRef.current?.value || "1"),
-            });
-          }}
-        >
-          افزودن به سبد خرید
-        </button>
+        {!inCart && (
+          <button
+            className="btn btn-secondary text-xs btn-sm"
+            onClick={() => {
+              addProduct(product!, {
+                _id: product?._id,
+                name: product?.name,
+                qty: parseInt(qtyRef.current?.value || "1"),
+              });
+              setInCart(true);
+            }}
+          >
+            افزودن به سبد خرید
+          </button>
+        )}
       </div>
       <div className="col-span-4 md:col-span-1 flex flex-col gap-7">
         <Link

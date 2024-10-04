@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import ShopProduct from "../components/ShopProduct";
 import ShopFilter, { ShopFilterForm } from "../components/ShopFilter";
 import useFilteredProducts from "../hooks/useFilteredProducts";
-import useNewProducts from "../hooks/useNewProducts";
+import useProducts from "../hooks/useProducts";
 
 const Shop = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
-  const { data: products } = useNewProducts();
+  const { data: products } = useProducts();
   const { data: filteredProducts, mutate } = useFilteredProducts();
   const [status, setStatus] = useState<boolean>(false);
 
