@@ -5,8 +5,10 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import apiClient from "../api/api-client";
 import { CategoryModel } from "../types/category.model";
+import useSingleProduct from "../hooks/useSingleProduct";
+import { useParams } from "react-router-dom";
 
-type CreateProductFormData = {
+type EditProductFormData = {
   name: string;
   price: number;
   category: string;
@@ -15,12 +17,12 @@ type CreateProductFormData = {
   image: FileList;
 };
 
-const CreateProduct = () => {
+const EditProduct = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateProductFormData>();
+  } = useForm<EditProductFormData>();
   const [fileState, setFileState] = useState<string>("");
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +30,10 @@ const CreateProduct = () => {
       setFileState(URL.createObjectURL(e.target.files[0]));
     }
   };
+
+  const { id } = useParams();
+
+  const { data: product } = useSingleProduct(id!);
 
   const { data: categoryData } = useQuery({
     queryKey: ["categories"],
@@ -39,7 +45,7 @@ const CreateProduct = () => {
 
   const { mutate, isPending, isError, isSuccess, error, reset } = useMutation({
     mutationKey: ["new-product"],
-    mutationFn: (newProduct: CreateProductFormData) => {
+    mutationFn: (newProduct: EditProductFormData) => {
       const formData = new FormData();
       formData.append("name", newProduct.name);
       formData.append("price", String(newProduct.price));
@@ -64,13 +70,11 @@ const CreateProduct = () => {
     },
   });
 
-  const onSubmit = (data: CreateProductFormData) => {
+  const onSubmit = (data: EditProductFormData) => {
     mutate(data);
   };
   return (
     <div className="w-2/3">
-      <h1 className="mb-5">محصول جدید</h1>
-
       {isPending && <p>در حال ارسال...</p>}
       {isSuccess && <p className="text-success">محصول با موفقیت ساخته شد</p>}
       {isError && (
@@ -114,6 +118,7 @@ const CreateProduct = () => {
           <Input
             label="نام"
             placeholder="نام محصول را وارد نمایید"
+            defaultValue={product?.name}
             useFormRegister={register("name", {
               required: true,
               minLength: 3,
@@ -130,6 +135,7 @@ const CreateProduct = () => {
           <Input
             label="قیمت"
             placeholder="قیمت محصول را وارد نمایید"
+            defaultValue={product?.price}
             useFormRegister={register("price")}
           />
 
@@ -139,7 +145,7 @@ const CreateProduct = () => {
             </label>
             <select
               id="category"
-              className="form-select select select-bordered block w-full"
+              className="select select-bordered form-select block w-full"
               {...register("category")}
             >
               {categoryData?.map((category) => (
@@ -151,30 +157,38 @@ const CreateProduct = () => {
           </div>
         </div>
         <div className="col-span-2">
-          <TextArea label="توضیحات" useFormRegister={register("description")} />
+          <TextArea
+            label="توضیحات"
+            defaultValue={product?.description}
+            useFormRegister={register("description")}
+          />
         </div>
         <div className="col-span-2 flex gap-3">
           <Input
             label="تعداد قابل خرید"
             placeholder="تعداد قابل خرید را وارد نمایید"
+            defaultValue={product?.quantity}
             useFormRegister={register("quantity")}
           />
 
           <Input
             label="موجودی"
             placeholder="موجودی"
+            defaultValue={product?.quantity}
             useFormRegister={register("quantity")}
           />
         </div>
-        <button
-          type="submit"
-          className="btn btn-sm text-xs btn-secondary self-start w-36"
-        >
-          {isPending ? "در حال ارسال..." : "ساخت محصول جدید"}
-        </button>
+        <div className="flex gap-2">
+          <button className="btn w-fit btn-sm text-white btn-success">
+            بروزرسانی محصول
+          </button>
+          <button className="btn w-fit btn-sm text-white btn-error">
+            حذف محصول
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default CreateProduct;
+export default EditProduct;

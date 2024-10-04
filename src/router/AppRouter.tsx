@@ -10,6 +10,8 @@ import Order from "../pages/Order";
 import Dashboard from "../pages/Dashboard";
 import Details from "../pages/Details";
 import OrderAdmin from "../pages/OrderAdmin";
+import AllProduct from "../pages/AllProduct";
+import EditProduct from "../pages/EditProduct";
 
 const router: RouteObject[] = [
   {
@@ -89,6 +91,22 @@ const router: RouteObject[] = [
     element: (
       <PageLayout>
         <Dashboard />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/all-product",
+    element: (
+      <PageLayout>
+        <AllProduct />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/edit-product/:id",
+    element: (
+      <PageLayout isCenter={true}>
+        <EditProduct />
       </PageLayout>
     ),
   },

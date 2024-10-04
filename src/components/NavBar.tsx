@@ -102,7 +102,7 @@ const NavBar = () => {
         {id && (
           <>
             <ul
-              className={`absolute right-2 bottom-10 menu w-36 bg-base-200 rounded-box ${
+              className={`absolute right-2 bottom-10 menu w-40 bg-base-200 rounded-box ${
                 showMenu ? "block" : "hidden"
               }`}
             >
@@ -119,6 +119,11 @@ const NavBar = () => {
               {isAdmin && (
                 <li className="mb-3">
                   <Link to={"/user"}>مدیریت کاربران</Link>
+                </li>
+              )}
+              {isAdmin && (
+                <li className="mb-3">
+                  <Link to={"/all-product"}>مدیریت محصولات</Link>
                 </li>
               )}
               {isAdmin && (
