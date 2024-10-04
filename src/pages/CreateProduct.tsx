@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import { useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import apiClient from "../api/api-client";
-import { CategoryModel } from "../types/category.model";
+import useCategories from "../hooks/useCategories";
 
 type CreateProductFormData = {
   name: string;
@@ -28,14 +28,7 @@ const CreateProduct = () => {
       setFileState(URL.createObjectURL(e.target.files[0]));
     }
   };
-
-  const { data: categoryData } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () =>
-      apiClient
-        .get<CategoryModel[]>("/category/categories")
-        .then((res) => res.data),
-  });
+  const { data: categoryData } = useCategories();
 
   const { mutate, isPending, reset } = useMutation({
     mutationKey: ["new-product"],

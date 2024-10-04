@@ -87,6 +87,7 @@ const ShoppingProgress = () => {
             error={errors.paymentMethod}
             useFormRegister={register("paymentMethod", { required: true })}
             value="درگاه پرداخت پاسارگاد"
+            title="درگاه پرداخت پاسارگاد"
           />
 
           <button type="submit" className="btn btn-secondary mt-5 rounded-full">
