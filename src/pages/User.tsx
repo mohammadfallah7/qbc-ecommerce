@@ -22,7 +22,10 @@ const User = () => {
   const { mutate: updateUser } = useMutation({
     mutationKey: ["update-user"],
     mutationFn: (id: string) =>
-      apiClient.put("/users/" + id, { username: newUsername, email: newEmail }),
+      apiClient.put("/users/" + id, {
+        username: newUsername,
+        email: newEmail,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },

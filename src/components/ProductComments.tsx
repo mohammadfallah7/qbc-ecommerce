@@ -23,7 +23,11 @@ const ProductComments: React.FC<IProductCommentsProps> = ({ id }) => {
             <p>{review.comment}</p>
             <ProductStars rate={review.rating} />
           </div>
-          <span className="text-sm">{getDate(review.createdAt)}</span>
+          <span className="text-sm">{`${new Date(
+            review.createdAt
+          ).getHours()}:${new Date(review.createdAt).getMinutes()} ${getDate(
+            review.createdAt
+          )}`}</span>
         </div>
       ))}
     </div>
