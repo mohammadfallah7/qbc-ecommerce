@@ -10,7 +10,7 @@ interface Props {
   error?: FieldError;
   isHidden?: boolean;
   className?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

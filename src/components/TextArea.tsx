@@ -6,6 +6,7 @@ interface Props {
   useFormRegister: UseFormRegisterReturn;
   error?: FieldError;
   isFullWidth?: boolean;
+  defaultValue?: string;
 }
 
 const TextArea = ({
@@ -14,6 +15,7 @@ const TextArea = ({
   useFormRegister,
   error,
   isFullWidth = true,
+  defaultValue,
 }: Props) => {
   return (
     <label className={`form-control w-full mb-3 ${!isFullWidth && "max-w-xl"}`}>
@@ -26,6 +28,7 @@ const TextArea = ({
           error && "textarea-error"
         } `}
         placeholder={placeholder}
+        defaultValue={defaultValue}
       ></textarea>
     </label>
   );
