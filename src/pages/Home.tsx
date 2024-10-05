@@ -5,6 +5,7 @@ import useNavItem from "../stores/nav-item-store";
 import ProductSlider from "../components/ProductSlider";
 import useProducts from "../hooks/useProducts";
 import Loading from "../components/Loading";
+import Warning from "../components/Warning";
 
 const Home = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
@@ -17,6 +18,8 @@ const Home = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  if (products?.length === 0) return <Warning title="هیچ محصولی وجود ندارد" />;
 
   return (
     <div className="grid grid-cols-2 grid-rows-subgrid gap-14 items-center">

@@ -3,13 +3,16 @@ import StatusBadge from "../components/StatusBadge";
 import useOrders from "../hooks/useOrders";
 import { getDate } from "../utils/get-date";
 import Loading from "../components/Loading";
+import Warning from "../components/Warning";
+import getImage from "../utils/get-image";
 
 const Order = () => {
   const { data: orders, isLoading } = useOrders();
 
   if (!orders || orders.length === 0) {
-    return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
+    return <Warning title="هنوز هیچ سفارشی ثبت نکرده اید" />;
   }
+
   if (isLoading) {
     return <Loading />;
   }
@@ -32,11 +35,17 @@ const Order = () => {
           {order.orderItems.map((orderItem) => (
             <tr key={orderItem._id}>
               <td>
-                <div className="w-12 h-12 bg-base-300"></div>
+                <div className="w-12 h-12 bg-base-300 overflow-hidden rounded">
+                  <img
+                    src={getImage(orderItem.image)}
+                    alt={orderItem.name}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </td>
               <td>{orderItem.name}</td>
               <td>{getDate(order.createdAt)}</td>
-              <td>{orderItem.price}</td>
+              <td>{orderItem.price.toLocaleString()}</td>
               <td>
                 {order.isPaid ? (
                   <StatusBadge color="success">پرداخت شده</StatusBadge>

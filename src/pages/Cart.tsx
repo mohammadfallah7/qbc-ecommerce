@@ -25,12 +25,6 @@ const Cart = () => {
           تعداد ({orderItems.reduce((acc, current) => (acc += current.qty!), 0)}
           )
         </span>
-        <span className="font-bold">
-          {cartProducts
-            .reduce((accumulator, current) => (accumulator += current.price), 0)
-            .toLocaleString()}
-          تومان
-        </span>
         <Link
           to={"shopping-progress"}
           className="btn btn-secondary text-sm rounded-full"
@@ -40,7 +34,7 @@ const Cart = () => {
       </div>
     </div>
   ) : (
-    <div className="mt-5">
+    <div>
       <Warning title="سبد خرید خالی است." />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProductFeatureList from "../components/ProductFeatureList";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import useCart from "../stores/cart-store";
@@ -8,25 +8,32 @@ import ProductComments from "../components/ProductComments";
 import RelatedProducts from "../components/RelatedProducts";
 import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
-import useProducts from "../hooks/useProducts";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
+<<<<<<< HEAD
 import { FaPlus } from "react-icons/fa6";
+=======
+import useSingleProduct from "../hooks/useSingleProduct";
+import getImage from "../utils/get-image";
+>>>>>>> f326bbaaa7b8c8445e88f3c5e208305b6e920c87
 
 const ProductPage = () => {
   const { likeProduct, disLikeProduct } = useFavoriteProducts();
   const addProduct = useCart((state) => state.addProduct);
-  const { id } = useParams();
-  const location = useLocation();
   const [content, setContent] = useState("comments");
-  const { data: products, isLoading } = useProducts();
-  const product = products?.find((product) => product._id === id);
   const qtyRef = useRef<HTMLSelectElement>(null);
+<<<<<<< HEAD
   const [inCart, setInCart] = useState(false);
+=======
+  const location = useLocation();
+  const { data: product, isLoading } = useSingleProduct();
+
+>>>>>>> f326bbaaa7b8c8445e88f3c5e208305b6e920c87
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const content = queryParams.get("content")!;
     setContent(content);
   }, [location.search]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -36,7 +43,7 @@ const ProductPage = () => {
       <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg overflow-hidden h-96">
         <img
           className="object-cover w-full h-full"
-          src={product?.image}
+          src={getImage(product!.image)}
           alt={product?.name}
         />
       </div>
@@ -122,8 +129,8 @@ const ProductPage = () => {
         </Link>
       </div>
       <div className="col-span-4 md:col-span-3">
-        {content === "add-comment" && <AddComment id={product?._id} />}
-        {content === "comments" && <ProductComments id={product?._id} />}
+        {content === "add-comment" && <AddComment />}
+        {content === "comments" && <ProductComments />}
         {content === "related-products" && <RelatedProducts />}
       </div>
     </div>

@@ -3,6 +3,7 @@ import PriceBadge from "./PriceBadge";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { ProductModel } from "../types/product.model";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
+import getImage from "../utils/get-image";
 
 interface Props {
   product: ProductModel;
@@ -25,7 +26,11 @@ const ProductCard = ({ product }: Props) => {
             onClick={() => likeProduct(product)}
           />
         )}
-        <img src={product.image} alt={product.name} />
+        <img
+          src={getImage(product.image)}
+          alt={product.name}
+          className="object-cover w-full h-full"
+        />
       </div>
       <Link to={`/products/${product._id}?content=add-comment`}>
         <div className="flex justify-between items-center">

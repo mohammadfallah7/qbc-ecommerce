@@ -21,7 +21,7 @@ const Favorites = () => {
         ))}
     </div>
   ) : (
-    <div className="mt-5">
+    <div>
       <Warning title="محصول مورد علاقه ای وجود ندارد." />
     </div>
   );

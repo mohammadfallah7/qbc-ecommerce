@@ -20,7 +20,6 @@ const ShopFilter: React.FC<IShopFilterProps> = ({ onFilter, setStatus }) => {
     <div>
       <form
         onSubmit={handleSubmit((data) => {
-          console.log(data);
           onFilter(data);
         })}
       >

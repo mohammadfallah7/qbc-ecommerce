@@ -2,6 +2,7 @@ import { FaTrash } from "react-icons/fa6";
 import useCart from "../stores/cart-store";
 import { Link } from "react-router-dom";
 import { ProductModel } from "../types/product.model";
+import getImage from "../utils/get-image";
 
 interface Props {
   cartProduct: ProductModel;
@@ -16,7 +17,7 @@ const CartProduct = ({ cartProduct }: Props) => {
         <div className="flex items-center justify-stretch gap-5">
           <div className="bg-base-300 w-24 h-24 rounded overflow-hidden">
             <img
-              src={cartProduct.image}
+              src={getImage(cartProduct.image)}
               alt={cartProduct.name}
               className="w-full object-cover h-full"
             />
@@ -28,19 +29,10 @@ const CartProduct = ({ cartProduct }: Props) => {
           </div>
         </div>
       </Link>
-      <div className="flex items-center gap-5">
-        <select className="select select-bordered select-sm">
-          {[1, 2, 3, 4, 5].map((number) => (
-            <option key={number} value={number}>
-              {number}
-            </option>
-          ))}
-        </select>
-        <FaTrash
-          className="text-error cursor-pointer"
-          onClick={() => deleteProduct(cartProduct._id)}
-        />
-      </div>
+      <FaTrash
+        className="text-error cursor-pointer"
+        onClick={() => deleteProduct(cartProduct._id)}
+      />
     </div>
   );
 };

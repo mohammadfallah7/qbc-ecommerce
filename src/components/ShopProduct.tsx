@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IoCaretBack } from "react-icons/io5";
 import { ProductModel } from "../types/product.model";
 import useCart from "../stores/cart-store";
+import getImage from "../utils/get-image";
 
 interface Props {
   product: ProductModel;
@@ -13,8 +14,12 @@ const ShopProduct = ({ product }: Props) => {
 
   return (
     <div className="card card-compact bg-base-100 shadow">
-      <figure className="bg-base-300 w-full h-40 relative">
-        <img src={product.image} alt={product.name} />
+      <figure className="bg-base-300 w-full h-40 relative overflow-hidden">
+        <img
+          src={getImage(product.image)}
+          alt={product.name}
+          className="w-full object-cover"
+        />
         <div className="badge badge-secondary text-xs absolute right-3 bottom-3">
           {product.category?.name || "Uncategorized"}
         </div>

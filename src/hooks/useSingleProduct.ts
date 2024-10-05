@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../api/api-client";
 import { ProductModel } from "../types/product.model";
+import { useParams } from "react-router-dom";
 
-const useSingleProduct = (id: string) => {
+const useSingleProduct = () => {
+  const { id } = useParams();
+
   return useQuery({
     queryKey: ["product"],
     queryFn: () =>

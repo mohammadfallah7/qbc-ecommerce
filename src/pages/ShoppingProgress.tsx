@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import Input from "../components/Input";
 import Radio from "../components/Radio";
 import CartProductsTable from "../components/CartProductsTable";
-import { IoCaretBack } from "react-icons/io5";
 import useCreateOrder from "../hooks/useCreateOrder";
 import { Link } from "react-router-dom";
 
@@ -17,14 +16,13 @@ export type ShoppingProgressFormData = {
 
 const ShoppingProgress = () => {
   const [step, setStep] = useState<number>(2);
+  const { mutate, isPending, data: order } = useCreateOrder(setStep);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<ShoppingProgressFormData>();
-
-  const { mutate, isPending, data: order } = useCreateOrder(setStep);
 
   const onSubmit = (data: ShoppingProgressFormData) => {
     mutate(data);
@@ -46,7 +44,7 @@ const ShoppingProgress = () => {
           <Input
             error={errors.address}
             label="آدرس"
-            placeholder="میدان ولیعهد"
+            placeholder="آدرس خود را وارد کنید"
             useFormRegister={register("address", { required: true })}
           />
           {errors.address?.type === "required" && (
@@ -55,7 +53,7 @@ const ShoppingProgress = () => {
           <Input
             error={errors.city}
             label="شهر"
-            placeholder="تهران"
+            placeholder="شهر خود را وارد کنید"
             useFormRegister={register("city", { required: true })}
           />
           {errors.address?.type === "required" && (
@@ -64,7 +62,7 @@ const ShoppingProgress = () => {
           <Input
             error={errors.country}
             label="کشور"
-            placeholder="ایران"
+            placeholder="کشور خود را وارد کنید"
             useFormRegister={register("country", { required: true })}
           />
           {errors.address?.type === "required" && (
@@ -74,7 +72,7 @@ const ShoppingProgress = () => {
             error={errors.postalCode}
             label="کد پستی"
             type="number"
-            placeholder="9441835549"
+            placeholder="کد پستی خود را وارد کنید"
             useFormRegister={register("postalCode", {
               valueAsNumber: true,
               required: true,
@@ -100,14 +98,6 @@ const ShoppingProgress = () => {
       )}
       {step === 3 && (
         <div className="flex flex-col gap-5">
-          <button
-            type="button"
-            onClick={() => setStep(2)}
-            className="btn btn-secondary btn-sm w-fit mt-5 rounded-full"
-          >
-            <IoCaretBack style={{ transform: "rotate(180deg)" }} />
-            بازگشت
-          </button>
           <div className="overflow-x-auto">
             <CartProductsTable products={order?.orderItems} />
           </div>

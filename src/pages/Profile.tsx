@@ -19,13 +19,14 @@ const Profile = () => {
     formState: { errors },
     reset,
   } = useForm<ProfileFormData>();
-
   const { data: user, isLoading } = useUser();
   const { mutate } = useUpdateUser();
+
   const onSubmit = (data: ProfileFormData) => {
     mutate(data);
     reset();
   };
+
   if (isLoading) {
     return <Loading />;
   }
