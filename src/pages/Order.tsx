@@ -4,6 +4,7 @@ import useOrders from "../hooks/useOrders";
 import { getDate } from "../utils/get-date";
 import Loading from "../components/Loading";
 import Warning from "../components/Warning";
+import getImage from "../utils/get-image";
 
 const Order = () => {
   const { data: orders, isLoading } = useOrders();
@@ -34,7 +35,13 @@ const Order = () => {
           {order.orderItems.map((orderItem) => (
             <tr key={orderItem._id}>
               <td>
-                <div className="w-12 h-12 bg-base-300">{/* Image */}</div>
+                <div className="w-12 h-12 bg-base-300 overflow-hidden rounded">
+                  <img
+                    src={getImage(orderItem.image)}
+                    alt={orderItem.name}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </td>
               <td>{orderItem.name}</td>
               <td>{getDate(order.createdAt)}</td>

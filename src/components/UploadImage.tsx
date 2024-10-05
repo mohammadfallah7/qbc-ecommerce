@@ -29,7 +29,7 @@ const UploadImage: React.FC<IUploadImageProps> = ({ onUploadImage }) => {
       )}
       <label
         htmlFor="image"
-        className="border w-full text-center p-7 rounded-md border-dashed input-bordered"
+        className="border label-text w-full text-center p-5 rounded-md border-dashed input-bordered"
       >
         آپلود عکس
       </label>

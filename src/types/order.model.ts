@@ -6,7 +6,7 @@ export type OrderModel = {
   createdAt: string;
   updatedAt: string;
   orderItems: OrderItem[];
-  user: { _id: string; username: string };
+  user: { _id: string; username: string; email: string };
   isDelivered: boolean;
   shippingAddress: ShippingAddress;
   isPaid: boolean;

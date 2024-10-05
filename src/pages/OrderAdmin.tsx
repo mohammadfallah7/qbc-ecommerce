@@ -6,6 +6,7 @@ import useAdminOrders from "../hooks/useAdminOrders";
 import usePaidOrder from "../hooks/usePaidOrder";
 import useDeliveryOrder from "../hooks/useDeliveryOrder";
 import Warning from "../components/Warning";
+import getImage from "../utils/get-image";
 
 const OrderAdmin = () => {
   const { data: orders, isLoading } = useAdminOrders();
@@ -38,8 +39,12 @@ const OrderAdmin = () => {
           {order.orderItems.map((orderItem) => (
             <tr key={orderItem._id}>
               <td>
-                <div className="w-12 h-12 bg-base-300 rounded">
-                  {/* Image */}
+                <div className="w-12 h-12 bg-base-300 overflow-hidden rounded">
+                  <img
+                    src={getImage(orderItem.image)}
+                    alt={orderItem.name}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               </td>
               <td>{orderItem.name}</td>

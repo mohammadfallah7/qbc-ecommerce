@@ -25,6 +25,10 @@ const Details = () => {
             <span>{order?.user?.username || "Unknown"}</span>
           </div>
           <div className="flex items-center gap-2 mt-2">
+            <span className="text-secondary">ایمیل:</span>
+            <span>{order?.user?.email || "Unknown"}</span>
+          </div>
+          <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">آدرس:</span>
             <span>
               {order?.shippingAddress.city} - {order?.shippingAddress.address} -{" "}
