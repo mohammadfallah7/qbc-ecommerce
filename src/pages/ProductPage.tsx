@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
 import useSingleProduct from "../hooks/useSingleProduct";
+import getImage from "../utils/get-image";
 
 const ProductPage = () => {
   const { likeProduct, disLikeProduct } = useFavoriteProducts();
@@ -32,11 +33,11 @@ const ProductPage = () => {
   return (
     <div className="grid grid-cols-4 grid-rows-subgrid gap-14">
       <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg overflow-hidden h-96">
-        {/* <img
+        <img
           className="object-cover w-full h-full"
-          src={product?.image}
+          src={getImage(product!.image)}
           alt={product?.name}
-        /> */}
+        />
       </div>
       <div className="col-span-4 md:col-span-2 flex flex-col justify-between items-start gap-7 relative">
         {product?.isFavorite ? (

@@ -29,7 +29,7 @@ const ProductCard = ({ product }: Props) => {
         <img
           src={getImage(product.image)}
           alt={product.name}
-          className="object-cover w-full"
+          className="object-cover w-full h-full"
         />
       </div>
       <Link to={`/products/${product._id}?content=add-comment`}>

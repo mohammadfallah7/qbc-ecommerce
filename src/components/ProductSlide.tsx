@@ -15,7 +15,7 @@ const ProductSlide = ({ product }: Props) => {
           <img
             src={getImage(product.image)}
             alt={product.name}
-            className="object-cover w-full"
+            className="object-cover w-full h-full"
           />
         </div>
         <div className="grid grid-cols-2 gap-7">

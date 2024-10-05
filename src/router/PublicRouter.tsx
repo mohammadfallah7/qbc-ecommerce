@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import ProductPage from "../pages/ProductPage";
+import TestPage from "../pages/TestPage";
 
 const publicRouter = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const publicRouter = createBrowserRouter([
     element: (
       <PageLayout>
         <Cart />
+      </PageLayout>
+    ),
+  },
+  {
+    path: "/test",
+    element: (
+      <PageLayout>
+        <TestPage />
       </PageLayout>
     ),
   },
