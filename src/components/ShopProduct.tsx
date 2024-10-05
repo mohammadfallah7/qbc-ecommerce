@@ -14,7 +14,7 @@ const ShopProduct = ({ product }: Props) => {
   return (
     <div className="card card-compact bg-base-100 shadow">
       <figure className="bg-base-300 w-full h-40 relative">
-        <img src={product.image} alt={product.name} />
+        {/* <img src={product.image} alt={product.name} /> */}
         <div className="badge badge-secondary text-xs absolute right-3 bottom-3">
           {product.category?.name || "Uncategorized"}
         </div>

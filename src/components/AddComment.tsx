@@ -6,13 +6,10 @@ export type AddCommentFormData = {
   rating: 1 | 2 | 3 | 4 | 5;
   comment: string;
 };
-interface IAddCommentProps {
-  id: string | undefined;
-}
 
-const AddComment: React.FC<IAddCommentProps> = ({ id }) => {
+const AddComment = () => {
   const { register, handleSubmit, reset } = useForm<AddCommentFormData>();
-  const { mutate } = useCreateReview(id!);
+  const { mutate, error } = useCreateReview();
 
   return (
     <form
@@ -21,6 +18,7 @@ const AddComment: React.FC<IAddCommentProps> = ({ id }) => {
         reset();
       })}
     >
+      {error && <p className="text-sm text-warning">{error.message}</p>}
       <label className="form-control w-full max-w-xl my-5">
         <div className="label">
           <span className="label-text">امتیاز</span>

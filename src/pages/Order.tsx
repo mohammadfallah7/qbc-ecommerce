@@ -8,8 +8,9 @@ const Order = () => {
   const { data: orders, isLoading } = useOrders();
 
   if (!orders || orders.length === 0) {
-    return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
+    return <p className="mt-7 text-center">هیچ سفارشی وجود ندارد</p>;
   }
+
   if (isLoading) {
     return <Loading />;
   }
@@ -32,11 +33,11 @@ const Order = () => {
           {order.orderItems.map((orderItem) => (
             <tr key={orderItem._id}>
               <td>
-                <div className="w-12 h-12 bg-base-300"></div>
+                <div className="w-12 h-12 bg-base-300">{/* Image */}</div>
               </td>
               <td>{orderItem.name}</td>
               <td>{getDate(order.createdAt)}</td>
-              <td>{orderItem.price}</td>
+              <td>{orderItem.price.toLocaleString()}</td>
               <td>
                 {order.isPaid ? (
                   <StatusBadge color="success">پرداخت شده</StatusBadge>

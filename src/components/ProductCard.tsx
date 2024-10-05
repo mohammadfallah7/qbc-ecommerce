@@ -25,7 +25,7 @@ const ProductCard = ({ product }: Props) => {
             onClick={() => likeProduct(product)}
           />
         )}
-        <img src={product.image} alt={product.name} />
+        {/* <img src={product.image} alt={product.name} /> */}
       </div>
       <Link to={`/products/${product._id}?content=add-comment`}>
         <div className="flex justify-between items-center">

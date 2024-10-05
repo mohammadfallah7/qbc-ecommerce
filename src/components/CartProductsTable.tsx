@@ -20,15 +20,14 @@ const CartProductsTable = ({ products }: Props) => {
         {products?.map((cartProduct) => (
           <tr key={cartProduct._id}>
             <th>
-              <div className="bg-base-300 w-16 h-16 rounded-md"></div>
+              <div className="bg-base-300 w-16 h-16 rounded-md">
+                {/* Image */}
+              </div>
             </th>
             <td>{cartProduct.name}</td>
             <td>{cartProduct.qty}</td>
             <td>{cartProduct.price.toLocaleString()}</td>
-            <td>
-              {(cartProduct.price * cartProduct.qty).toLocaleString()}
-              تومان
-            </td>
+            <td>{(cartProduct.price * cartProduct.qty).toLocaleString()}</td>
           </tr>
         ))}
       </tbody>

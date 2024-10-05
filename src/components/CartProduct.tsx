@@ -15,11 +15,11 @@ const CartProduct = ({ cartProduct }: Props) => {
       <Link to={`/products/${cartProduct._id}?content=add-comment`}>
         <div className="flex items-center justify-stretch gap-5">
           <div className="bg-base-300 w-24 h-24 rounded overflow-hidden">
-            <img
+            {/* <img
               src={cartProduct.image}
               alt={cartProduct.name}
               className="w-full object-cover h-full"
-            />
+            /> */}
           </div>
           <div className="flex flex-col gap-3 text-sm">
             <span className="text-secondary">{cartProduct.name}</span>
@@ -28,19 +28,10 @@ const CartProduct = ({ cartProduct }: Props) => {
           </div>
         </div>
       </Link>
-      <div className="flex items-center gap-5">
-        <select className="select select-bordered select-sm">
-          {[1, 2, 3, 4, 5].map((number) => (
-            <option key={number} value={number}>
-              {number}
-            </option>
-          ))}
-        </select>
-        <FaTrash
-          className="text-error cursor-pointer"
-          onClick={() => deleteProduct(cartProduct._id)}
-        />
-      </div>
+      <FaTrash
+        className="text-error cursor-pointer"
+        onClick={() => deleteProduct(cartProduct._id)}
+      />
     </div>
   );
 };

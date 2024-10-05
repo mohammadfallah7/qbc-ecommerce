@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ProductFeatureList from "../components/ProductFeatureList";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import useCart from "../stores/cart-store";
@@ -8,23 +8,23 @@ import ProductComments from "../components/ProductComments";
 import RelatedProducts from "../components/RelatedProducts";
 import Loading from "../components/Loading";
 import ProductStars from "../components/ProductStars";
-import useProducts from "../hooks/useProducts";
 import useFavoriteProducts from "../stores/favoriteProduct-store";
+import useSingleProduct from "../hooks/useSingleProduct";
 
 const ProductPage = () => {
   const { likeProduct, disLikeProduct } = useFavoriteProducts();
   const addProduct = useCart((state) => state.addProduct);
-  const { id } = useParams();
-  const location = useLocation();
   const [content, setContent] = useState("comments");
-  const { data: products, isLoading } = useProducts();
-  const product = products?.find((product) => product._id === id);
   const qtyRef = useRef<HTMLSelectElement>(null);
+  const location = useLocation();
+  const { data: product, isLoading } = useSingleProduct();
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const content = queryParams.get("content")!;
     setContent(content);
   }, [location.search]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -32,11 +32,11 @@ const ProductPage = () => {
   return (
     <div className="grid grid-cols-4 grid-rows-subgrid gap-14">
       <div className="col-span-4 md:col-span-2 bg-base-300 rounded-lg overflow-hidden h-96">
-        <img
+        {/* <img
           className="object-cover w-full h-full"
           src={product?.image}
           alt={product?.name}
-        />
+        /> */}
       </div>
       <div className="col-span-4 md:col-span-2 flex flex-col justify-between items-start gap-7 relative">
         {product?.isFavorite ? (
@@ -102,8 +102,8 @@ const ProductPage = () => {
         </Link>
       </div>
       <div className="col-span-4 md:col-span-3">
-        {content === "add-comment" && <AddComment id={product?._id} />}
-        {content === "comments" && <ProductComments id={product?._id} />}
+        {content === "add-comment" && <AddComment />}
+        {content === "comments" && <ProductComments />}
         {content === "related-products" && <RelatedProducts />}
       </div>
     </div>

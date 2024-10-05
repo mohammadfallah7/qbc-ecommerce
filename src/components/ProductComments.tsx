@@ -2,12 +2,8 @@ import ProductStars from "../components/ProductStars";
 import useSingleProduct from "../hooks/useSingleProduct";
 import { getDate } from "../utils/get-date";
 
-interface IProductCommentsProps {
-  id: string | undefined;
-}
-
-const ProductComments: React.FC<IProductCommentsProps> = ({ id }) => {
-  const { data: product } = useSingleProduct(id!);
+const ProductComments = () => {
+  const { data: product } = useSingleProduct();
 
   return product?.reviews.length === 0 ? (
     <p className="text-sm">هیچ نظری برای این محصول وجود ندارد</p>

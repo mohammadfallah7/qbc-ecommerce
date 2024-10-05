@@ -33,7 +33,7 @@ const Details = () => {
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">آدرس:</span>
             <span>
-              {order?.shippingAddress.city} - {order?.shippingAddress.address}
+              {order?.shippingAddress.city} - {order?.shippingAddress.address} -{" "}
               {order?.shippingAddress.postalCode}
             </span>
           </div>

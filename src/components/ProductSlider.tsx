@@ -1,9 +1,8 @@
+import ProductSlide from "./ProductSlide";
+import useNewProducts from "../hooks/useNewProducts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-
-import ProductSlide from "./ProductSlide";
 import "swiper/css";
-import useNewProducts from "../hooks/useNewProducts";
 
 const ProductSlider = () => {
   const { data: newProducts } = useNewProducts();
