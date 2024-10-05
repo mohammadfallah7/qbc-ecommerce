@@ -1,10 +1,8 @@
 import CartProductsTable from "../components/CartProductsTable";
-import useUser from "../hooks/useUser";
 import Loading from "../components/Loading";
 import useOrder from "../hooks/useOrder";
 
 const Details = () => {
-  const { data: user } = useUser();
   const { data: order, isLoading } = useOrder();
 
   if (isLoading) return <Loading />;
@@ -24,11 +22,7 @@ const Details = () => {
           </div>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">نام:</span>
-            <span>{user?.username}</span>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-secondary">ایمیل:</span>
-            <span>{user?.email}</span>
+            <span>{order?.user?.username || "Unknown"}</span>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-secondary">آدرس:</span>

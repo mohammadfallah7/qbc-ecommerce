@@ -8,14 +8,13 @@ import useDeliveryOrder from "../hooks/useDeliveryOrder";
 
 const OrderAdmin = () => {
   const { data: orders, isLoading } = useAdminOrders();
-
   const { mutate: makePaid } = usePaidOrder();
-
   const { mutate: makeDelivery } = useDeliveryOrder();
 
   if (!orders || orders.length === 0) {
     return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
   }
+
   if (isLoading) {
     return <Loading />;
   }
@@ -38,7 +37,9 @@ const OrderAdmin = () => {
           {order.orderItems.map((orderItem) => (
             <tr key={orderItem._id}>
               <td>
-                <div className="w-12 h-12 bg-base-300"></div>
+                <div className="w-12 h-12 bg-base-300 rounded">
+                  {/* Image */}
+                </div>
               </td>
               <td>{orderItem.name}</td>
               <td>{getDate(order.createdAt)}</td>
@@ -61,7 +62,7 @@ const OrderAdmin = () => {
                 <div className="flex gap-5 items-center">
                   <Link
                     to={`/details/${order._id}`}
-                    className="btn btn-sm btn-secondary"
+                    className="btn btn-xs btn-secondary"
                   >
                     جزییات
                   </Link>
@@ -71,13 +72,13 @@ const OrderAdmin = () => {
                       !order.isDelivered && makeDelivery(order?._id)
                     }
                   >
-                    ارسال محصول
+                    ارسال
                   </button>
                   <button
                     className="btn btn-xs btn-secondary"
                     onClick={() => !order.isPaid && makePaid(order?._id)}
                   >
-                    پرداخت محصول
+                    پرداخت
                   </button>
                 </div>
               </td>
