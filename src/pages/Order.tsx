@@ -3,12 +3,13 @@ import StatusBadge from "../components/StatusBadge";
 import useOrders from "../hooks/useOrders";
 import { getDate } from "../utils/get-date";
 import Loading from "../components/Loading";
+import Warning from "../components/Warning";
 
 const Order = () => {
   const { data: orders, isLoading } = useOrders();
 
   if (!orders || orders.length === 0) {
-    return <p className="mt-7 text-center">هیچ سفارشی وجود ندارد</p>;
+    return <Warning title="هنوز هیچ سفارشی ثبت نکرده اید" />;
   }
 
   if (isLoading) {

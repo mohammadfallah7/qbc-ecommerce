@@ -4,6 +4,7 @@ import ShopProduct from "../components/ShopProduct";
 import ShopFilter, { ShopFilterForm } from "../components/ShopFilter";
 import useFilteredProducts from "../hooks/useFilteredProducts";
 import useProducts from "../hooks/useProducts";
+import Warning from "../components/Warning";
 
 const Shop = () => {
   const changeNavItem = useNavItem((state) => state.changeNavItem);
@@ -19,6 +20,8 @@ const Shop = () => {
     setStatus(true);
     mutate(data);
   };
+
+  if (products?.length === 0) return <Warning title="هیچ محصولی وجود ندارد" />;
 
   return (
     <div className="flex gap-7 items-start">

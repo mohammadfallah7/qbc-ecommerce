@@ -21,7 +21,7 @@ const UploadImage: React.FC<IUploadImageProps> = ({ onUploadImage }) => {
     }
   };
   return (
-    <div className="flex flex-col items-center gap-7">
+    <div className="flex flex-col items-center gap-7 mb-3">
       {file && (
         <figure className="w-52 h-56 overflow-hidden rounded-md">
           <img src={file} alt="Image" className="w-full object-cover" />

@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import useAdminOrders from "../hooks/useAdminOrders";
 import usePaidOrder from "../hooks/usePaidOrder";
 import useDeliveryOrder from "../hooks/useDeliveryOrder";
+import Warning from "../components/Warning";
 
 const OrderAdmin = () => {
   const { data: orders, isLoading } = useAdminOrders();
@@ -12,7 +13,7 @@ const OrderAdmin = () => {
   const { mutate: makeDelivery } = useDeliveryOrder();
 
   if (!orders || orders.length === 0) {
-    return <p className="mt-14 text-center">هیچ سفارشی وجود ندارد</p>;
+    return <Warning title="هنوز هیچ سفارشی ثبت نشده است" />;
   }
 
   if (isLoading) {

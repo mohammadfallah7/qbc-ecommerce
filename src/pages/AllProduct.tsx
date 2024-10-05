@@ -3,9 +3,12 @@ import useProducts from "../hooks/useProducts";
 import { getDate } from "../utils/get-date";
 import { Link } from "react-router-dom";
 import getImage from "../utils/get-image";
+import Warning from "../components/Warning";
 
 const AllProduct = () => {
   const { data: products, isLoading } = useProducts();
+
+  if (products?.length === 0) return <Warning title="هیچ محصولی وجود ندارد" />;
 
   if (isLoading) return <Loading />;
 

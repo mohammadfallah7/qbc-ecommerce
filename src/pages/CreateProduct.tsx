@@ -5,6 +5,7 @@ import useCategories from "../hooks/useCategories";
 import UploadImage from "../components/UploadImage";
 import useUploadImage from "../hooks/useUploadImage";
 import useCreateProduct from "../hooks/useCreateProduct";
+import Select from "../components/Select";
 
 export type CreateProductFormData = {
   name: string;
@@ -22,13 +23,10 @@ const CreateProduct = () => {
   } = useForm<CreateProductFormData>();
   const { data: categories } = useCategories();
   const { mutate: uploadImage, data: uploadedImage } = useUploadImage();
-  const { mutate, isPending, reset } = useCreateProduct(
-    uploadedImage?.image || ""
-  );
+  const { mutate } = useCreateProduct(uploadedImage?.image);
 
   const onSubmit = (data: CreateProductFormData) => {
     mutate(data);
-    reset();
   };
 
   return (
@@ -60,44 +58,30 @@ const CreateProduct = () => {
             placeholder="قیمت محصول را وارد نمایید"
             useFormRegister={register("price")}
           />
-          <div className="w-full mt-2 flex flex-col gap-2">
-            <label htmlFor="category" className="label-text">
-              دسته‌بندی
-            </label>
-            <select
-              id="category"
-              className="form-select select select-bordered block w-full"
-              {...register("category")}
-            >
-              {categories?.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
+
+          <Select useFormRegister={register("category")} label="دسته بندی">
+            {categories?.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </Select>
         </div>
         <div className="col-span-2">
           <TextArea label="توضیحات" useFormRegister={register("description")} />
         </div>
-        <div className="col-span-2 flex gap-3">
-          <Input
-            label="تعداد قابل خرید"
-            placeholder="تعداد قابل خرید را وارد نمایید"
-            useFormRegister={register("quantity")}
-          />
-
+        <div className="col-span-2">
           <Input
             label="موجودی"
-            placeholder="موجودی"
+            placeholder="موجودی محصول را وارد نمایید"
             useFormRegister={register("quantity")}
           />
         </div>
         <button
           type="submit"
-          className="btn btn-sm text-xs btn-secondary self-start w-36"
+          className="btn btn-sm text-xs btn-secondary w-fit mt-2"
         >
-          {isPending ? "در حال ساخت" : "ساخت محصول جدید"}
+          ساخت محصول جدید
         </button>
       </form>
     </div>

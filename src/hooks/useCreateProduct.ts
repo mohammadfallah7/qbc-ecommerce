@@ -3,7 +3,7 @@ import { CreateProductFormData } from "../pages/CreateProduct";
 import apiClient from "../api/api-client";
 import { useNavigate } from "react-router-dom";
 
-const useCreateProduct = (image: string) => {
+const useCreateProduct = (image: string | undefined) => {
   const navigate = useNavigate();
 
   return useMutation({
