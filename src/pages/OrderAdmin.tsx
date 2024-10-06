@@ -13,12 +13,12 @@ const OrderAdmin = () => {
   const { mutate: makePaid } = usePaidOrder();
   const { mutate: makeDelivery } = useDeliveryOrder();
 
-  if (!orders || orders.length === 0) {
-    return <Warning title="هنوز هیچ سفارشی ثبت نشده است" />;
-  }
-
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (!orders || orders.length === 0) {
+    return <Warning title="هنوز هیچ سفارشی ثبت نشده است" />;
   }
 
   return orders?.map((order) => (

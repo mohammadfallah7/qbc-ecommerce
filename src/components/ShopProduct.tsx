@@ -31,7 +31,7 @@ const ShopProduct = ({ product }: Props) => {
             {product.price.toLocaleString()} تومان
           </span>
         </div>
-        <p>{product.description}</p>
+        <p className="line-clamp-2">{product.description}</p>
         <div className="card-actions items-center justify-between mt-2">
           <Link to={`/products/${product._id}?content=add-comment`}>
             <button className="btn btn-secondary btn-sm text-xs">

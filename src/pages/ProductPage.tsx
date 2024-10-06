@@ -55,7 +55,7 @@ const ProductPage = () => {
           />
         )}
         <p>{product?.name}</p>
-        <p>{product?.description}</p>
+        <p className="text-sm leading-7">{product?.description}</p>
         <span className="text-2xl">
           {product?.price.toLocaleString()} تومان
         </span>

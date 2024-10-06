@@ -23,7 +23,7 @@ const AllProduct = () => {
             <img
               src={getImage(product.image)}
               alt={product.name}
-              className="object-cover w-full"
+              className="object-cover w-full h-full"
             />
           </div>
           <div className="flex flex-col w-full gap-5">
@@ -31,7 +31,7 @@ const AllProduct = () => {
               <h2>{product.name}</h2>
               <span className="text-sm">{getDate(product.createdAt)}</span>
             </div>
-            <p className="text-sm">{product.description}</p>
+            <p className="text-sm line-clamp-2">{product.description}</p>
             <div className="flex items-center w-full justify-between">
               <div className="flex gap-2">
                 <Link to={`/products/${product._id}?content=add-comment`}>

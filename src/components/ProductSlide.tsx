@@ -24,7 +24,7 @@ const ProductSlide = ({ product }: Props) => {
             <span className="text-sm self-end">
               {product?.price.toLocaleString()} تومان
             </span>
-            <p className="text-sm">{product.description}</p>
+            <p className="text-sm line-clamp-2">{product.description}</p>
           </div>
           <ProductFeatureList product={product} />
         </div>

@@ -24,12 +24,12 @@ const UploadImage: React.FC<IUploadImageProps> = ({ onUploadImage }) => {
     <div className="flex flex-col items-center gap-7 mb-3">
       {file && (
         <figure className="w-52 h-56 overflow-hidden rounded-md">
-          <img src={file} alt="Image" className="w-full object-cover" />
+          <img src={file} alt="Image" className="w-full h-full object-cover" />
         </figure>
       )}
       <label
         htmlFor="image"
-        className="border label-text w-full text-center p-5 rounded-md border-dashed input-bordered"
+        className="border label-text w-full text-center p-7 rounded-md border-dashed input-bordered"
       >
         آپلود عکس
       </label>
