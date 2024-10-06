@@ -103,7 +103,7 @@ const Register = () => {
             type="password"
             useFormRegister={register("password", {
               required: true,
-              minLength: 8,
+              minLength: 6,
               maxLength: 12,
             })}
           />
@@ -111,7 +111,7 @@ const Register = () => {
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
           {errors.password?.type === "minLength" && (
-            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+            <p className="text-error text-sm">حداقل باید 6 کارکتر باشد</p>
           )}
           {errors.password?.type === "maxLength " && (
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
@@ -123,7 +123,7 @@ const Register = () => {
             type="password"
             useFormRegister={register("confirm_Password", {
               required: true,
-              minLength: 8,
+              minLength: 6,
               maxLength: 12,
             })}
           />
@@ -131,7 +131,7 @@ const Register = () => {
             <p className="text-error text-sm">این فیلد اجباری است.</p>
           )}
           {errors.confirm_Password?.type === "minLength" && (
-            <p className="text-error text-sm">حداقل باید 8 کارکتر باشد</p>
+            <p className="text-error text-sm">حداقل باید 6 کارکتر باشد</p>
           )}
           {errors.confirm_Password?.type === "maxLength " && (
             <p className="text-error text-sm">حداکثر باید 12 کارکتر باشد</p>
