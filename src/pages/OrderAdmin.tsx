@@ -23,7 +23,7 @@ const OrderAdmin = () => {
 
   return orders?.map((order) => (
     <div key={order._id} className="overflow-x-auto">
-      <table className="table mt-14">
+      <table className="table">
         <thead>
           <tr>
             <th>عکس</th>
@@ -49,7 +49,7 @@ const OrderAdmin = () => {
               </td>
               <td>{orderItem.name}</td>
               <td>{getDate(order.createdAt)}</td>
-              <td>{orderItem.price}</td>
+              <td>{orderItem.price.toLocaleString()}</td>
               <td>
                 {order.isPaid ? (
                   <StatusBadge color="success">پرداخت شده</StatusBadge>
